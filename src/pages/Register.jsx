@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { tablet, mobile } from '../responsive'
+
 const Container = styled.div`
     width: 100vw;
     height: 100vh;
@@ -10,6 +12,7 @@ const Container = styled.div`
     ),
     url("https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80")
     no-repeat center/100%;
+    background-size: cover;
 
     display: flex;
     align-items: center;
@@ -19,7 +22,9 @@ const Container = styled.div`
 const Wrapper = styled.div`
     width: 40%;
     padding: 20px;
-    background-color: white
+    background-color: white;
+    ${tablet({ width: "50%" })};
+    ${mobile({ width: "75%" })};
 `
 
 const Title = styled.h1`

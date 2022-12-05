@@ -1,15 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Add, Remove } from '@material-ui/icons'
 import Navbar from '../components/Navbar'
 import Announcement from '../components/Announcement'
 import Newsletter from '../components/Newsletter'
 import Footer from '../components/Footer'
-import { Add, Remove } from '@material-ui/icons'
+import { tablet, mobile } from '../responsive'
 
 const Container = styled.div``
 const Wrapper = styled.div`
     padding: 50px;
     display: flex;
+    ${tablet({ flexDirection: "column", padding: "30px" })};
+    ${mobile({ padding: "20px" })};
 `
 
 const ImageContainer = styled.div`
@@ -44,7 +47,8 @@ const FilterContainer = styled.div`
     width: 60%;
     margin: 30px 0px;
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    ${tablet({ width: "100%" })};
 `
 const Filter = styled.div`
     display: flex;
@@ -74,6 +78,7 @@ const AddContainer = styled.div`
     width: 60%;
     display: flex;
     justify-content: space-between;
+    ${tablet({ width: "100%" })};
 `
 
 const AmountContainer = styled.div`

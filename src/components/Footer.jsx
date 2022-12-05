@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Facebook, Pinterest, Twitter, Instagram, Phone, Room, MailOutline } from '@material-ui/icons'
+import { laptop } from '../responsive'
 
 const Container = styled.div`
     display: flex;
+    ${laptop({ flexDirection: "column" })}
 `
 const Left = styled.div`
     flex:1;

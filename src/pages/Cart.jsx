@@ -5,10 +5,13 @@ import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import { Add, Remove } from '@material-ui/icons'
 
+import { tablet, mobile } from '../responsive'
+
 const Container = styled.div``
 
 const Wrapper = styled.div`
     padding: 20px;
+    ${mobile({ padding: "10px" })};
 `
 
 const Title = styled.h1`
@@ -21,6 +24,7 @@ const Top = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    ${mobile({ flexDirection: "column" })};
 `
 
 const TopButton = styled.button`
@@ -31,9 +35,13 @@ const TopButton = styled.button`
     border: ${props => props.type === "filled" && "none"};
     background-color: ${props => props.type === "filled" ? "black" : "transparent"};
     color: ${props => props.type === "filled" && "white"};
+
+    ${mobile({ width: "100%", marginTop: "5px" })};
 `
 
-const TopTexts = styled.div``;
+const TopTexts = styled.div`
+    ${tablet({ display: "none" })};
+`;
 
 const TopText = styled.span`
     text-decoration: underline;
@@ -43,6 +51,7 @@ const TopText = styled.span`
 
 const Buttom = styled.div`
     display: flex;
+    ${tablet({ flexDirection: "column" })}
 `;
 
 const Info = styled.div`
@@ -54,6 +63,7 @@ const Info = styled.div`
 const Product = styled.div`
     display: flex;
     justify-content: space-between;
+    ${tablet({ flexDirection: "column" })};
 `;
 
 const ProductDetail = styled.div`
@@ -74,7 +84,9 @@ const Details = styled.div`
 
 const ProductName = styled.span``;
 
-const ProductId = styled.span``;
+const ProductId = styled.span`
+${mobile({ wordWrap: "break-word" })};
+`;
 
 const ProductColor = styled.div`
     width: 20px;
@@ -102,11 +114,13 @@ const ProductAmountContainer = styled.div`
 const ProductAmount = styled.div`
     font-size: 24px;
     margin: 5px;
+    ${tablet({ margin: "5px 15px" })}
 `;
 
 const ProductPrice = styled.div`
     font-size: 30px;
     font-weight: 200;
+    ${tablet({ marginBottom: "20px" })}
 `;
 
 const Hr = styled.hr`
