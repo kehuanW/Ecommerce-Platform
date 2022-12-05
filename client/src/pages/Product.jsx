@@ -27,7 +27,8 @@ const Image = styled.img`
 
 const InfoContainer = styled.div`
     flex: 1;
-    padding: 0px 50px
+    padding: 0px 50px;
+    ${tablet({ padding: "0px 10px" })};
 `
 
 const Title = styled.h1`
