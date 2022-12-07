@@ -1,10 +1,11 @@
 const express = require('express');
 const CryptoJS = require('crypto-js');
 const User = require('../models/User');
-const { error } = require('console');
+const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
+// REGISTER
 router.post('/register', async (req, res) => {
     const newUser = new User({
         username: req.body.username,
@@ -21,6 +22,8 @@ router.post('/register', async (req, res) => {
     }
 })
 
+
+// LOGIN
 router.post('/login', async (req, res) => {
     const username = req.body.username;
     const rawPw = req.body.password;
@@ -28,21 +31,31 @@ router.post('/login', async (req, res) => {
 
     try {
         const dbUserInfo = await User.findOne({ username: username });
-        // console.log(dbUserInfo.password);
+        // console.log("auth", dbUserInfo._id.toString());
+        // console.log("auth", dbUserInfo.isAdmin);
 
         if (!dbUserInfo) {
             res.status(401).json("wrong credentials");
 
         } else { //Avoid Error: Can't set headers after they are sent to the client
+
+            const accessToken = jwt.sign(
+                {
+                    id: dbUserInfo._id.toString(),
+                    isAdmin: dbUserInfo.isAdmin,
+                },
+                process.env.JWT_SEC,
+                { expiresIn: "3d" }
+            )
+
             const { password, ...others } = dbUserInfo._doc;
             const decrypedPw = CryptoJS.AES.decrypt(password, process.env.PASSWORD_SEC).toString(CryptoJS.enc.Utf8);
-            // console.log(decrypedPw);
 
             if (decrypedPw !== rawPw) {
                 // console.log("check pw")
                 res.status(401).json("wrong credentials");
             } else {
-                res.status(201).json(others);
+                res.status(201).json({ ...others, accessToken });
             }
         }
 
