@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
-    console.log("verifyToken");
+    // console.log("verifyToken");
     const authHeader = req.headers.token;
     if (authHeader) {
         // token: Bearer <token itself>
@@ -32,7 +32,7 @@ const verifyToken = (req, res, next) => {
 
 
 const verifyTokenAndAuthorization = (req, res, next) => {
-    console.log("verifyTokenAndAuthorization");
+    // console.log("verifyTokenAndAuthorization");
     verifyToken(req, res, () => {
         // console.log(req.user.id);
         // console.log(req.params.id);
