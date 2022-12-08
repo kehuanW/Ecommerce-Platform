@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch, } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ProductList from './pages/ProductList'
 import Product from './pages/Product'
@@ -12,19 +12,18 @@ const App = () => {
   const user = true;
   return (
     <div>
-      <Router>
-        <Switch>
-          <Route path="/" exact component={Home}>
-          </Route>
-          <Route path="/products" component={ProductList}></Route>
-          <Route path="/product" component={Product}></Route>
-          <Route path="/cart" component={Cart}></Route>
-          <Route path="/login" component={user ? Home : Login}></Route>
-          <Route path="/register" component={user ? Home : Register}></Route>
-          <Route path="/pay" component={Pay}></Route>
-          <Route path="/success" component={Success}></Route>
-        </Switch>
-      </Router>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/products/:category" element={<ProductList />}></Route>
+          <Route path="/product/:id" element={<Product />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/login" element={user ? <Home /> : <Login />}></Route>
+          <Route path="/register" element={user ? <Home /> : <Register />}></Route>
+          <Route path="/pay" element={<Pay />}></Route>
+          <Route path="/success" element={<Success />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 };
