@@ -6,6 +6,7 @@ import Footer from '../components/Footer'
 import { Add, Remove } from '@material-ui/icons'
 
 import { tablet, mobile } from '../responsive'
+import { useSelector } from 'react-redux'
 
 const Container = styled.div``
 
@@ -161,6 +162,9 @@ const SummaryButton = styled.button`
 
 
 const Cart = () => {
+    const cart = useSelector(state => state.cart);
+    console.log(cart);
+
     return (
         <Container>
             <Navbar />
@@ -177,51 +181,34 @@ const Cart = () => {
                 </Top>
                 <Buttom>
                     <Info>
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80" />
-                                <Details>
-                                    <ProductName><b>Product:</b> High Quality Jacket</ProductName>
-                                    <ProductId><b>ID:</b> 1445729857648</ProductId>
-                                    <ProductColor color="#c96332" />
-                                    <ProductSize><b>Size:</b> 18</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove />
-                                </ProductAmountContainer>
-                                <ProductPrice>$ 50</ProductPrice>
-                            </PriceDetail>
-                        </Product>
+                        {cart.products.map(item => (
+                            <Product key={item._id}>
+                                <ProductDetail>
+                                    <Image src={item.img} />
+                                    <Details>
+                                        <ProductName><b>Product:</b>{item.title}</ProductName>
+                                        <ProductId><b>ID:</b> {item._id}</ProductId>
+                                        <ProductColor color={item.color} />
+                                        <ProductSize><b>Size: </b>{item.size ? item.size : "None"}</ProductSize>
+                                    </Details>
+                                </ProductDetail>
+                                <PriceDetail>
+                                    <ProductAmountContainer>
+                                        <Add />
+                                        <ProductAmount>{item.amount}</ProductAmount>
+                                        <Remove />
+                                    </ProductAmountContainer>
+                                    <ProductPrice>$ {item.price * item.amount}</ProductPrice>
+                                </PriceDetail>
+                            </Product>
+                        ))}
                         <Hr />
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80" />
-                                <Details>
-                                    <ProductName><b>Product:</b> High Quality Jacket</ProductName>
-                                    <ProductId><b>ID:</b> 1445729857648</ProductId>
-                                    <ProductColor color="#c96332" />
-                                    <ProductSize><b>Size:</b> 18</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove />
-                                </ProductAmountContainer>
-                                <ProductPrice>$ 50</ProductPrice>
-                            </PriceDetail>
-                        </Product>
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMERY</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>$ 100</SummaryItemPrice>
+                            <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -233,7 +220,7 @@ const Cart = () => {
                         </SummaryItem>
                         <SummaryItem type="total">
                             <SummaryItemText>Total</SummaryItemText>
-                            <SummaryItemPrice>$ 100</SummaryItemPrice>
+                            <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
                         </SummaryItem>
                         <SummaryButton>CHECKOUT NOW</SummaryButton>
                     </Summary>

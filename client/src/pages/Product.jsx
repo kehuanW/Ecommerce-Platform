@@ -9,6 +9,8 @@ import Newsletter from '../components/Newsletter';
 import Footer from '../components/Footer';
 import { tablet, mobile } from '../responsive';
 import { publicRequest } from '../requestMethods';
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div``
 const Wrapper = styled.div`
@@ -120,9 +122,12 @@ const Product = () => {
     const itemId = location.pathname.split('/')[2]
     const [product, setProduct] = useState({});
     const [amount, setAmount] = useState(1);
+    const [color, setColor] = useState("");
+    const [size, setSize] = useState("");
+    const dispatch = useDispatch();
 
-    const handleClick = (type) => {
-        if (type === "desc") {
+    const handleAmount = (type) => {
+        if (type === "dec") {
             //注意这里是amount>1,amount最小=2时，可以decrease.页面上amount最小是1
             amount > 1 && setAmount(amount - 1);
         } else {
@@ -140,6 +145,12 @@ const Product = () => {
         getProduct();
     }, [itemId]);
 
+    const handleClick = () => {
+        dispatch(
+            addProduct({ ...product, amount, color, size })
+        );
+    };
+
     return (
         <Container>
             <Navbar />
@@ -151,15 +162,15 @@ const Product = () => {
                 <InfoContainer>
                     <Title>{product.title}</Title>
                     <Desc>{product.desc}</Desc>
-                    <Price>{product.price}</Price>
+                    <Price>${product.price}</Price>
                     <FilterContainer>
-                        <Filter>
+                        <Filter >
                             <FilterTitle>Color</FilterTitle>
-                            {product.color?.map((c) => <FilterColor key={c} color={c} />)}
+                            {product.color?.map((c) => <FilterColor key={c} color={c} onClick={() => setColor(c)} />)}
                         </Filter>
                         <Filter>
                             <FilterTitle>Size</FilterTitle>
-                            <FilterSize>
+                            <FilterSize onChange={(e) => { setSize(e.target.value); console.log(size) }}>
                                 {product.size?.map((s) => <FilterSizeOption key={s} >{s.toUpperCase()}</FilterSizeOption>)}
                             </FilterSize>
                         </Filter>
@@ -167,17 +178,17 @@ const Product = () => {
                     <AddContainer>
                         <AmountContainer>
                             {/* At onClick you should not call the function, instead set a function reference.  */}
-                            <Remove onClick={() => handleClick("desc")} />
+                            <Remove onClick={() => handleAmount("dec")} />
                             <Amount>{amount}</Amount>
-                            <Add onClick={() => handleClick("asc")} />
+                            <Add onClick={() => handleAmount("inc")} />
                         </AmountContainer>
-                        <Button>ADD TO CART</Button>
+                        <Button onClick={handleClick}>ADD TO CART</Button>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>
             <Newsletter />
             <Footer />
-        </Container>
+        </Container >
     )
 }
 
