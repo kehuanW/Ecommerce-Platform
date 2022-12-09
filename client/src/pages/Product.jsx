@@ -1,11 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Add, Remove } from '@material-ui/icons'
-import Navbar from '../components/Navbar'
-import Announcement from '../components/Announcement'
-import Newsletter from '../components/Newsletter'
-import Footer from '../components/Footer'
-import { tablet, mobile } from '../responsive'
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { Add, Remove } from '@material-ui/icons';
+import { useLocation } from 'react-router-dom';
+
+import Navbar from '../components/Navbar';
+import Announcement from '../components/Announcement';
+import Newsletter from '../components/Newsletter';
+import Footer from '../components/Footer';
+import { tablet, mobile } from '../responsive';
+import { publicRequest } from '../requestMethods';
 
 const Container = styled.div``
 const Wrapper = styled.div`
@@ -112,44 +115,61 @@ const Button = styled.button`
 `
 
 const Product = () => {
+
+    const location = useLocation();
+    const itemId = location.pathname.split('/')[2]
+    const [product, setProduct] = useState({});
+    const [amount, setAmount] = useState(1);
+
+    const handleClick = (type) => {
+        if (type === "desc") {
+            //注意这里是amount>1,amount最小=2时，可以decrease.页面上amount最小是1
+            amount > 1 && setAmount(amount - 1);
+        } else {
+            setAmount(amount + 1);
+        }
+    }
+
+    useEffect(() => {
+        const getProduct = async () => {
+            try {
+                const res = await publicRequest.get(`products/find/${itemId}`);
+                setProduct(res.data);
+            } catch (err) { }
+        }
+        getProduct();
+    }, [itemId]);
+
     return (
         <Container>
             <Navbar />
             <Announcement />
             <Wrapper>
                 <ImageContainer>
-                    <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+                    <Image src={product.img} />
                 </ImageContainer>
                 <InfoContainer>
-                    <Title>Denim Jumpsuit</Title>
-                    <Desc>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae eligendi, eos, cumque nemo quae odio sit possimus doloribus quasi nihil, perferendis quisquam iste dolorum temporibus commodi magni in sint dignissimos?
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui enim iusto dolorum quia dicta temporibus dolores non officia, atque reprehenderit eligendi deleniti optio laudantium, expedita aperiam corrupti quisquam, nesciunt omnis!
-                    </Desc>
-                    <Price>$ 20</Price>
+                    <Title>{product.title}</Title>
+                    <Desc>{product.desc}</Desc>
+                    <Price>{product.price}</Price>
                     <FilterContainer>
                         <Filter>
                             <FilterTitle>Color</FilterTitle>
-                            <FilterColor color="black" />
-                            <FilterColor color="darkblue" />
-                            <FilterColor color="gray" />
+                            {product.color?.map((c) => <FilterColor key={c} color={c} />)}
                         </Filter>
                         <Filter>
                             <FilterTitle>Size</FilterTitle>
                             <FilterSize>
-                                <FilterSizeOption>XS</FilterSizeOption>
-                                <FilterSizeOption>S</FilterSizeOption>
-                                <FilterSizeOption>M</FilterSizeOption>
-                                <FilterSizeOption>L</FilterSizeOption>
-                                <FilterSizeOption>XL</FilterSizeOption>
+                                {product.size?.map((s) => <FilterSizeOption key={s} >{s.toUpperCase()}</FilterSizeOption>)}
                             </FilterSize>
                         </Filter>
                     </FilterContainer>
                     <AddContainer>
                         <AmountContainer>
-                            <Remove />
-                            <Amount>1</Amount>
-                            <Add />
+                            {/* At onClick you should not call the function, instead set a function reference.  */}
+                            <Remove onClick={() => handleClick("desc")} />
+                            <Amount>{amount}</Amount>
+                            <Add onClick={() => handleClick("asc")} />
                         </AmountContainer>
                         <Button>ADD TO CART</Button>
                     </AddContainer>
