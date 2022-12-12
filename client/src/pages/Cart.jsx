@@ -1,12 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
-import Navbar from '../components/Navbar'
-import Announcement from '../components/Announcement'
-import Footer from '../components/Footer'
-import { Add, Remove } from '@material-ui/icons'
-
-import { tablet, mobile } from '../responsive'
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import Navbar from '../components/Navbar';
+import Announcement from '../components/Announcement';
+import Footer from '../components/Footer';
+import { Add, Remove } from '@material-ui/icons';
+import { tablet, mobile } from '../responsive';
+import { useSelector } from 'react-redux';
+import { userRequest } from '../requestMethods';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Container = styled.div``
 
@@ -162,8 +164,24 @@ const SummaryButton = styled.button`
 
 
 const Cart = () => {
+
+    // const KEY = process.env.REACT_APP_STRIPE_SECRET_KEY_MY
+    // const navigate = useNavigate();
+
     const cart = useSelector(state => state.cart);
-    console.log(cart);
+
+    const handleCheckout = async () => {
+        // console.log("handleCheckout");
+        console.log(cart);
+        try {
+            const res = await userRequest.post("/checkout/payment");
+            // if (res.data.url) window.location.href = res.data.url;
+        }
+        catch {
+            console.log("error")
+        };
+    }
+
 
     return (
         <Container>
@@ -222,7 +240,9 @@ const Cart = () => {
                             <SummaryItemText>Total</SummaryItemText>
                             <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
                         </SummaryItem>
-                        <SummaryButton>CHECKOUT NOW</SummaryButton>
+                        <SummaryButton onClick={handleCheckout}>
+                            CHECKOUT NOW
+                        </SummaryButton>
                     </Summary>
                 </Buttom>
             </Wrapper>
