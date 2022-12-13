@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Add, Remove } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
 
+
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Newsletter from '../components/Newsletter';

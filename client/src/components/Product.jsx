@@ -67,7 +67,7 @@ const Icon = styled.div`
 `
 
 const Product = (props) => {
-    console.log(props.item);
+    // console.log(props.item);
     return (
         <Container>
             <Circle />

@@ -1,25 +1,32 @@
 const router = require("express").Router();
+const express = require("express");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 router.post('/payment', async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-        line_items: [
-            {
-                // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                price_data: {
-                    currency: 'usd',
-                    product_data: {
-                        name: 'glasses',
-                        description: 'hello',
-                        images: ['https://images.unsplash.com/photo-1670786611555-5218c1407492?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'],
-                        // quantity: 2
+    console.log(req.body);
+    const { cart, user } = req.body;
+    const { products, quantity, total } = cart;
+    const line_items = products.map((item) => {
+        return {
+            price_data: {
+                currency: "usd",
+                product_data: {
+                    name: item.title,
+                    images: [item.img],
+                    description: item.desc,
+                    metadata: {
+                        id: item._id,
                     },
-                    unit_amount: 2000, //cents
                 },
-                quantity: 3,
+                unit_amount: item.price * 100,
             },
-        ],
+            quantity: item.amount,
+        };
+    });
+    // console.log("myline_items", line_items);
+    const session = await stripe.checkout.sessions.create({
+        line_items,
         mode: 'payment',
         success_url: `${process.env.CLIENT_DOMAIN}/success`,
         cancel_url: `${process.env.CLIENT_DOMAIN}/cart`,

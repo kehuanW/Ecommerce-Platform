@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-const Success = () => {
+const Failure = () => {
     return (
         <div
             style={{
@@ -11,10 +11,11 @@ const Success = () => {
                 justifyContent: "center",
             }}
         >
-            Success
-            <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
+            Sorry, something went wrong...
+            Please try again.
+            <button style={{ padding: 10, marginTop: 20 }}>Go to Cart</button>
         </div>
     )
 }
 
-export default Success;
+export default Failure;

@@ -168,20 +168,20 @@ const Cart = () => {
     // const KEY = process.env.REACT_APP_STRIPE_SECRET_KEY_MY
     // const navigate = useNavigate();
 
-    const cart = useSelector(state => state.cart);
+    const { cart, user } = useSelector(state => state);
 
     const handleCheckout = async () => {
         // console.log("handleCheckout");
-        console.log(cart);
+        // console.log(cart);
         try {
-            const res = await userRequest.post("/checkout/payment");
-            // if (res.data.url) window.location.href = res.data.url;
+            const res = await userRequest.post("/checkout/payment", { cart, user });
+
+            if (res.data.url) window.location.href = res.data.url;
         }
         catch {
             console.log("error")
         };
     }
-
 
     return (
         <Container>
@@ -199,28 +199,33 @@ const Cart = () => {
                 </Top>
                 <Buttom>
                     <Info>
-                        {cart.products.map(item => (
-                            <Product key={item._id}>
-                                <ProductDetail>
-                                    <Image src={item.img} />
-                                    <Details>
-                                        <ProductName><b>Product:</b>{item.title}</ProductName>
-                                        <ProductId><b>ID:</b> {item._id}</ProductId>
-                                        <ProductColor color={item.color} />
-                                        <ProductSize><b>Size: </b>{item.size ? item.size : "None"}</ProductSize>
-                                    </Details>
-                                </ProductDetail>
-                                <PriceDetail>
-                                    <ProductAmountContainer>
-                                        <Add />
-                                        <ProductAmount>{item.amount}</ProductAmount>
-                                        <Remove />
-                                    </ProductAmountContainer>
-                                    <ProductPrice>$ {item.price * item.amount}</ProductPrice>
-                                </PriceDetail>
-                            </Product>
-                        ))}
-                        <Hr />
+                        {cart.products.length === 0
+                            ? "Your shopping cart is empty"
+                            : cart.products.map(item => (
+                                <>
+                                    <Product key={item._id}>
+                                        <ProductDetail>
+                                            <Image src={item.img} />
+                                            <Details>
+                                                <ProductName><b>Product:</b>{item.title}</ProductName>
+                                                <ProductId><b>ID:</b> {item._id}</ProductId>
+                                                <ProductColor color={item.color} />
+                                                <ProductSize><b>Size: </b>{item.size ? item.size : "None"}</ProductSize>
+                                            </Details>
+                                        </ProductDetail>
+                                        <PriceDetail>
+                                            <ProductAmountContainer>
+                                                <Add />
+                                                <ProductAmount>{item.amount}</ProductAmount>
+                                                <Remove />
+                                            </ProductAmountContainer>
+                                            <ProductPrice>$ {item.price * item.amount}</ProductPrice>
+                                        </PriceDetail>
+                                    </Product>
+                                    <Hr />
+                                </>
+                            ))}
+
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMERY</SummaryTitle>
