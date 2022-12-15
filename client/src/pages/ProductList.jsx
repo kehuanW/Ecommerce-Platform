@@ -7,7 +7,7 @@ import Newsletter from '../components/Newsletter'
 import Footer from '../components/Footer'
 import { tablet } from '../responsive'
 import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 
 const Container = styled.div``
 
@@ -40,9 +40,23 @@ const Option = styled.option``
 
 const ProductList = () => {
 
-    const location = useLocation();
-    const category = location.pathname.split('/')[2];
+    // const location = useLocation();
+    // const category = location.pathname.split('/')[2];
+    // console.log("location", location);
     // console.log("category", category);
+    const [queryParams] = useSearchParams();
+    // console.log("searchParam", Array.from(queryParams.keys()));
+    let queryParamList = Array.from(queryParams.keys());
+    let category = "";
+    let searchContent = "";
+    if (queryParamList.includes("category")) {
+        category = queryParams.get("category");
+    }
+    if (queryParamList.includes("search")) {
+        searchContent = queryParams.get("search");
+    };
+
+    console.log("category, searchContent", category, searchContent)
 
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState("newest");
@@ -93,7 +107,7 @@ const ProductList = () => {
                     </Select>
                 </Filter>
             </FilterContainer>
-            <Products category={category} filters={filters} sort={sort} />
+            <Products category={category} searchContent={searchContent} filters={filters} sort={sort} />
             <Newsletter />
             <Footer />
         </Container>
