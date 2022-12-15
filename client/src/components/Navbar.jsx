@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Search, ShoppingCartOutlined } from '@material-ui/icons';
 import { Badge } from '@material-ui/core'
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
-
-
 import { tablet, mobile } from '../responsive'
 
 const Container = styled.div`
@@ -82,22 +80,32 @@ const Navbar = () => {
     const quantity = cart.quantity;
     // console.log("cart", cart);
 
+    const [searchContent, setSearchContent] = useState("");
+
     return (
         <Container>
             <Wrapper>
                 <Left>
                     <Language>EN</Language>
                     <SearchContainer>
-                        <Input placeholder="Search" />
-                        <Search style={{ color: "gray", fontSize: 16 }} />
+                        <Input placeholder="Search" onInput={(e) => setSearchContent(e.target.value)} />
+                        <Link to={`/products?search=${searchContent}`}>
+                            <Search style={{ color: "gray", fontSize: 16 }} />
+                        </Link>
                     </SearchContainer>
                 </Left>
                 <Center>
-                    <Logo>LAMA.</Logo>
+                    <Link to="/" style={{ "textDecoration": "none" }}>
+                        <Logo>LAMA.</Logo>
+                    </Link>
                 </Center>
                 <Right>
-                    <MenuItem>REGISTER</MenuItem>
-                    <MenuItem>SIGN IN</MenuItem>
+                    <Link to="/register" style={{ "textDecoration": "none" }}>
+                        <MenuItem>REGISTER</MenuItem>
+                    </Link>
+                    <Link to="/login" style={{ "textDecoration": "none" }}>
+                        <MenuItem>LOG IN</MenuItem>
+                    </Link>
                     <Link to="/cart">
                         <MenuItem>
                             <Badge badgeContent={quantity} color="primary" overlap="rectangular">

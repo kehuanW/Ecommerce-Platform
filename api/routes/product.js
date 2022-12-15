@@ -28,8 +28,13 @@ router.get("/find/:id", async (req, res) => {
 
 // GET PRODUCTS
 router.get('/', async (req, res) => {
+    const qSearch = req.query.search;
     const qNew = req.query.new;
     const qCategory = req.query.category;
+
+    console.log("qSearch", qSearch);
+    console.log("qNew", qNew);
+    console.log("qCategory", qCategory);
     try {
         let products;
 
@@ -37,7 +42,16 @@ router.get('/', async (req, res) => {
             products = await Product.find().sort({ createdAt: -1 }).limit(1);
         } else if (qCategory) {
             products = await Product.find({ categories: { $in: [qCategory] } });
-        } else {
+        } else if (qSearch) {
+            products = await Product.find({
+                $or: [
+                    { title: { $regex: qSearch, $options: 'i' } },
+                    { categories: { $in: [qSearch] } },
+                    { desc: { $regex: qSearch, $options: 'i' } }
+                ]
+            });
+        }
+        else {
             products = await Product.find();
         }
 
