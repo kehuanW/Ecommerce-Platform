@@ -2,6 +2,7 @@ const router = require("express").Router();
 const express = require("express");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
+const Order = require('../models/Order');
 
 router.post('/payment',
     async (req, res) => {
@@ -53,6 +54,23 @@ router.post('/payment',
         res.send({ "url": session.url });
     });
 
+// CREATE ORDER in DB
+const creatOrder = async (purchaseCustomer, purchaseItems, purchaseAddress) => {
+    let order = { ...purchaseCustomer };
+    order.products = purchaseItems;
+    order.address = purchaseAddress;
+    order.quantity = purchaseItems.length;
+    // console.log("creatOrder", order);
+
+    const newOrder = new Order(order);
+    try {
+        const savedOrder = await newOrder.save();
+        console.log("Processed Order:", savedOrder);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
 const endpointSecret = "whsec_e6c2a9bad6da12aa795f4bf08d900bad6f603a9d1f5dcb55167f16ece609bde6";
 
@@ -71,17 +89,45 @@ router.post('/webhook',
             return;
         }
         // Handle the event
-
         if (event.type === "checkout.session.completed") {
+
+
+            const customer = await stripe.customers.retrieve(event.data.object.customer);
+            const purchaseCustomer = customer.metadata;
+            // console.log("purchaseCustomer", purchaseCustomer);
+            // purchaseCustomer { userId: '639011c32650e0a84c8bb231' }
 
             //When creating the items on the fly, metadata ends up in the product property, and not in the price property.
             const line_items = await stripe.checkout.sessions.listLineItems(event.data.object.id, {
                 expand: ['data.price.product'],
             });
-            console.log(line_items.data[0].price);
 
-            const customer = await stripe.customers.retrieve(event.data.object.customer);
-            // console.log("customer", customer);
+            const purchaseItems = line_items.data.map((i) => {
+                let itemMetaDataObject = i.price.product.metadata;
+                itemMetaDataObject.quantity = i.quantity;
+                return itemMetaDataObject;
+            });
+            // purchaseItems [
+            //     {
+            //       id: '6391c0dc745437030d0be281',
+            //       color: 'yellow',
+            //       size: 'M',
+            //       quantity: 2
+            //     },
+            //     { id: '6391c2e0745437030d0be287', color: 'green', quantity: 1 }
+            //   ]
+            // console.log("purchaseItems", purchaseItems);
+
+            const session = await stripe.checkout.sessions.retrieve(event.data.object.id);
+            const purchaseAddress = session.customer_details.address;
+            // console.log("address", address);
+
+            try {
+                creatOrder(purchaseCustomer, purchaseItems, purchaseAddress);
+            } catch (error) {
+                console.log(typeof createOrder);
+                console.log(err);
+            }
         }
 
         // Return a 200 response to acknowledge receipt of the event

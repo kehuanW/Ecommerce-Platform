@@ -9,7 +9,15 @@ const OrderSchema = new Schema(
                 productId: {
                     type: String,
                 },
-                amount: {
+                color: {
+                    type: String,
+                    default: "",
+                },
+                size: {
+                    type: String,
+                    default: "",
+                },
+                quantity: {
                     type: Number,
                     default: 1,
                 }
