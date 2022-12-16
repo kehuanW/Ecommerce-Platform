@@ -56,19 +56,23 @@ const ProductList = () => {
         searchContent = queryParams.get("search");
     };
 
-    console.log("category, searchContent", category, searchContent)
+    // console.log("category, searchContent", category, searchContent)
 
     const [filters, setFilters] = useState({});
-    const [sort, setSort] = useState("newest");
+    const [sort, setSort] = useState("");
 
     const handleFilterChange = (event) => {
-        const value = event.target.value;
-        setFilters({ ...filters, [event.target.name]: value.toLowerCase() });
-        // console.log(filters);
+        const { name, value } = event.target;
+        if (value !== 'any') {
+            setFilters({ ...filters, [name]: value.toLowerCase() });
+        }
     };
 
     const handleSortChange = (event) => {
-        setSort(event.target.value);
+        const { value } = event.target;
+        if (value !== "any") {
+            setSort(value);
+        }
         // console.log(sort);
     };
 
@@ -81,7 +85,7 @@ const ProductList = () => {
                 <Filter>
                     <FilterText>Filter Products:</FilterText>
                     <Select name="color" onChange={handleFilterChange}>
-                        <Option>Color</Option>
+                        <Option value="any">Any Color</Option>
                         <Option>White</Option>
                         <Option>Black</Option>
                         <Option>Red</Option>
@@ -90,7 +94,7 @@ const ProductList = () => {
                         <Option>Green</Option>
                     </Select>
                     <Select name="size" onChange={handleFilterChange}>
-                        <Option>Size</Option>
+                        <Option value="any">Any Size</Option>
                         <Option>XS</Option>
                         <Option>S</Option>
                         <Option>M</Option>
@@ -101,7 +105,7 @@ const ProductList = () => {
                 <Filter>
                     <FilterText>Sort Products:</FilterText>
                     <Select name="sort" onChange={handleSortChange}>
-                        <Option value="newest">Newest</Option>
+                        <Option value="any">Any</Option>
                         <Option value="asc">Price (asc)</Option>
                         <Option value="desc">Price (desc)</Option>
                     </Select>

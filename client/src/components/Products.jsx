@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { popularProducts } from '../data';
+// import { popularProducts } from '../data';
 import Product from './Product';
 
 const Container = styled.div`
@@ -13,71 +13,62 @@ const Container = styled.div`
 
 const Products = (props) => {
     const { category, searchContent, filters, sort } = props;
-    console.log(category, filters, sort, searchContent);
+    console.log("props", props);
+    // console.log(category, filters, sort, searchContent);
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
+    console.log("products", products);
+    console.log("filteredProducts", filteredProducts);
+
+    useEffect(async () => {
+        console.log("category useEffect");
+        let apiUrl;
+        if (category) {
+            apiUrl = `http://localhost:5000/api/products?category=${category}`;
+        } else if (searchContent) {
+            apiUrl = `http://localhost:5000/api/products?search=${searchContent}`;
+        } else {
+            apiUrl = `http://localhost:5000/api/products`;
+        }
+        try {
+            const dbProducts = await axios.get(apiUrl);
+            setProducts(dbProducts.data);
+            // console.log("products in category useEffect", products);
+            console.log("try")
+        } catch (err) { };
+    }, [category, searchContent]);
 
     useEffect(() => {
-        const getProducts = async () => {
-            try {
-                const dbProducts = await axios.get(
-                    category
-                        ? `http://localhost:5000/api/products?category=${category}`
-                        : `http://localhost:5000/api/products`
-                );
-                setProducts(dbProducts.data);
-                // console.log(dbProducts);
-            } catch (err) { };
-        };
-        getProducts();
-    }, [category]);
-
-    useEffect(() => {
-        const getProducts = async () => {
-            try {
-                const dbProducts = await axios.get(
-                    searchContent
-                        ? `http://localhost:5000/api/products?category=${searchContent}`
-                        : `http://localhost:5000/api/products`
-                );
-                setProducts(dbProducts.data);
-                // console.log(dbProducts);
-            } catch (err) { };
-        };
-        getProducts();
-    }, [searchContent]);
-
-    useEffect(() => {
-        console.log("products, category, filters");
-        category &&
+        console.log("useEffect Filter");
+        (category || searchContent) &&
             setFilteredProducts(
                 products.filter((item) =>
-                    Object.entries(filters).every(([key, value]) =>
-                        item[key].includes(value)
+                    Object.entries(filters).every(
+                        ([key, value]) =>
+                            item[key].includes(value)
                     )
                 )
             );
-    }, [products, category, filters]);
+    }, [products, category, searchContent, filters]);
 
     useEffect(() => {
-        console.log("sort");
-        if (sort === "newest") {
-            setFilteredProducts(products.sort((a, b) => a.createdAt - b.createdAt));
-        } else if (sort === "asc") {
-            // setFilteredProducts((prev) => [...prev].sort((a, b) => a.price - b.price));
-            setFilteredProducts(products.sort((a, b) => a.price - b.price));
+        console.log("sort/product useEffect");
+        if (sort === "asc") {
+            console.log("ASC useEffect products sort:", products.sort((a, b) => a.createdAt - b.createdAt))
+            setFilteredProducts((prev) => [...prev].sort((a, b) => a.price - b.price));
         } else if (sort === "desc") {
-            // setFilteredProducts((prev) => [...prev].sort((a, b) => a.price - b.price));
-            setFilteredProducts(products.sort((a, b) => b.price - a.price));
+            console.log("DESC useEffect products sort:", products.sort((a, b) => a.createdAt - b.createdAt))
+            setFilteredProducts((prev) => [...prev].sort((a, b) => b.price - a.price));
         }
     }, [sort]);
 
     return (
         <Container>
-            {category
+            {console.log("FINAL RETURN")}
+            {(sort || (filters && Object.keys(filters) !== 0))
                 ? filteredProducts.map((item) => <Product item={item} key={item._id} />)
                 : products
-                    .slice(0, 8)
+                    .slice(0, 3)
                     .map((item) => <Product item={item} key={item._id} />)}
         </Container>
     )
