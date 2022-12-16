@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Facebook, Pinterest, Twitter, Instagram, Phone, Room, MailOutline } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
 import { laptop } from '../responsive'
 
 const Container = styled.div`
@@ -55,7 +56,7 @@ const List = styled.ul`
     flex-wrap: wrap;
 `
 
-const ListItem = styled.li`
+const ListItem = styled.a`
     width: 50%;
     margin-bottom: 10px;
 `
@@ -101,11 +102,10 @@ const Footer = () => {
             <Center>
                 <Title>Useful Links</Title>
                 <List>
-                    <ListItem>Home</ListItem>
-                    <ListItem>Cart</ListItem>
-                    <ListItem>Man Fashion</ListItem>
-                    <ListItem>Woman Fashion</ListItem>
-                    <ListItem>Accessories</ListItem>
+                    <ListItem href='/'>Home</ListItem>
+                    <ListItem href='/cart'>My Cart</ListItem>
+                    <ListItem href='/products?category=men'>Man Fashion</ListItem>
+                    <ListItem href='/products?category=women'>Woman Fashion</ListItem>
                     <ListItem>My Account</ListItem>
                     <ListItem>Order Tracking</ListItem>
                     <ListItem>Wishlist</ListItem>

@@ -63,16 +63,14 @@ const ProductList = () => {
 
     const handleFilterChange = (event) => {
         const { name, value } = event.target;
-        if (value !== 'any') {
-            setFilters({ ...filters, [name]: value.toLowerCase() });
-        }
+        // if (value !== 'any') {
+        setFilters({ ...filters, [name]: value.toLowerCase() });
+        // }
     };
 
     const handleSortChange = (event) => {
         const { value } = event.target;
-        if (value !== "any") {
-            setSort(value);
-        }
+        setSort(value);
         // console.log(sort);
     };
 

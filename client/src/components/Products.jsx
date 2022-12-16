@@ -40,6 +40,7 @@ const Products = (props) => {
 
     useEffect(() => {
         console.log("useEffect Filter");
+        //TODO: deal with "any"
         (category || searchContent) &&
             setFilteredProducts(
                 products.filter((item) =>
@@ -54,11 +55,13 @@ const Products = (props) => {
     useEffect(() => {
         console.log("sort/product useEffect");
         if (sort === "asc") {
-            console.log("ASC useEffect products sort:", products.sort((a, b) => a.createdAt - b.createdAt))
+            // console.log("ASC useEffect products sort:", products.sort((a, b) => a.createdAt - b.createdAt))
             setFilteredProducts((prev) => [...prev].sort((a, b) => a.price - b.price));
         } else if (sort === "desc") {
-            console.log("DESC useEffect products sort:", products.sort((a, b) => a.createdAt - b.createdAt))
+            // console.log("DESC useEffect products sort:", products.sort((a, b) => a.createdAt - b.createdAt))
             setFilteredProducts((prev) => [...prev].sort((a, b) => b.price - a.price));
+        } else if (sort === "any") {
+            setFilteredProducts(((prev) => [...prev].sort((a, b) => a.title.localeCompare(b.title))));
         }
     }, [sort]);
 

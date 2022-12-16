@@ -1,6 +1,7 @@
 export const sliderItems = [
     {
         id: 1,
+        category: "summer",
         img: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80",
         title: "SUMMER SALE",
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
@@ -8,6 +9,7 @@ export const sliderItems = [
     },
     {
         id: 2,
+        category: "automn",
         img: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
         // "https://i.ibb.co/DG69bQ4/2.png",
         title: "AUTUMN COLLECTION",
@@ -16,9 +18,10 @@ export const sliderItems = [
     },
     {
         id: 3,
+        category: "winter",
         img: "https://images.unsplash.com/flagged/photo-1570733117311-d990c3816c47?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
         // "https://i.ibb.co/cXFnLLV/3.png",
-        title: "LOUNGEWEAR LOVE",
+        title: "WINTER SHOW",
         desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
         bg: "fbf0f4",
     },
@@ -35,13 +38,13 @@ export const categories = [
         id: 2,
         img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
         title: "LOUNGEWEAR LOVE",
-        cat: "coat"
+        cat: "men"
     },
     {
         id: 3,
         img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
         title: "LIGHT JACKETS",
-        cat: "jeans"
+        cat: "jacket"
     },
 ];
 
