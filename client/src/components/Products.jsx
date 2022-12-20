@@ -13,15 +13,15 @@ const Container = styled.div`
 
 const Products = (props) => {
     const { category, searchContent, filters, sort } = props;
-    console.log("props", props);
+    // console.log("filters", filters);
     // console.log(category, filters, sort, searchContent);
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
-    console.log("products", products);
-    console.log("filteredProducts", filteredProducts);
+    // console.log("products", products);
+    // console.log("filteredProducts", filteredProducts);
 
     useEffect(async () => {
-        console.log("category useEffect");
+        // console.log("category useEffect");
         let apiUrl;
         if (category) {
             apiUrl = `http://localhost:5000/api/products?category=${category}`;
@@ -39,17 +39,27 @@ const Products = (props) => {
     }, [category, searchContent]);
 
     useEffect(() => {
-        console.log("useEffect Filter");
+        // console.log("useEffect Filter");
         //TODO: deal with "any"
-        (category || searchContent) &&
-            setFilteredProducts(
-                products.filter((item) =>
-                    Object.entries(filters).every(
-                        ([key, value]) =>
-                            item[key].includes(value)
+        if (category || searchContent) {
+
+            // const propertyWithAny = Object.keys(filters).filter(key => filters[key] === "any");
+            // console.log("propertyWithAny", propertyWithAny)
+            let filtersTemp = filters;
+            if (filtersTemp.size === "any") delete filtersTemp.size;
+            if (filtersTemp.color === "any") delete filtersTemp.color;
+
+            // console.log("filtersTemp", filtersTemp);
+            filtersTemp &&
+                setFilteredProducts(
+                    products.filter((item) =>
+                        Object.entries(filtersTemp).every(
+                            ([key, value]) =>
+                                item[key].includes(value)
+                        )
                     )
-                )
-            );
+                );
+        }
     }, [products, category, searchContent, filters]);
 
     useEffect(() => {
@@ -71,7 +81,7 @@ const Products = (props) => {
             {(sort || (filters && Object.keys(filters) !== 0))
                 ? filteredProducts.map((item) => <Product item={item} key={item._id} />)
                 : products
-                    .slice(0, 3)
+                    .slice(0, 8)
                     .map((item) => <Product item={item} key={item._id} />)}
         </Container>
     )

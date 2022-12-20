@@ -58,7 +58,10 @@ const ProductList = () => {
 
     // console.log("category, searchContent", category, searchContent)
 
-    const [filters, setFilters] = useState({});
+    const [filters, setFilters] = useState({
+        color: "any",
+        size: "any"
+    });
     const [sort, setSort] = useState("");
 
     const handleFilterChange = (event) => {
