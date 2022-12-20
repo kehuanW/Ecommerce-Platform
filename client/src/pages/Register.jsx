@@ -1,7 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-
-import { tablet, mobile } from '../responsive'
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { useToasts } from 'react-toast-notifications'
+import { useNavigate } from "react-router-dom";
+import { tablet, mobile } from '../responsive';
+import { BASE_URL } from '../requestMethods';
 
 const Container = styled.div`
     width: 100vw;
@@ -61,21 +64,68 @@ const Button = styled.button`
 `
 
 const Register = () => {
+    const navigate = useNavigate();
+    const { addToast } = useToasts();
+
+    const [newUser, setNewUser] = useState({
+        username: "",
+        email: "",
+        password: "",
+    })
+
+    const [isCreated, setIsCreated] = useState(false);
+
+    useEffect(() => {
+        if (isCreated === true) {
+            const timer = setTimeout(() => {
+                // console.log("timer");
+                navigate("/login")
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [isCreated]);
+
+    const handleCreate = async (event) => {
+        event.preventDefault();
+        try {
+            const usernameList = await axios.get(BASE_URL + "auth/usernames");
+            // console.log(usernameList.data);
+            // console.log(newUser.username);
+            // console.log(newUser)
+            if (!usernameList.data.includes(newUser.username)) {
+                const res = await axios.post(BASE_URL + "auth/register", newUser);
+                // console.log(res.status);
+                if (res.status === 201) {
+                    addToast("The account is created successfully. Redirect you to Login Page...", {
+                        appearance: 'success',
+                        autoDismiss: true,
+                    });
+                    setIsCreated(true);
+                }
+            } else {
+                alert("The username has been taken. Please choose another one.")
+            }
+        } catch (err) {
+            addToast("Someting wrong. Please try again", {
+                appearance: 'error',
+                autoDismiss: true,
+            })
+        }
+    }
+
     return (
         <Container>
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
                 <Form>
-                    <Input placeholder="name" />
-                    <Input placeholder="last name" />
-                    <Input placeholder="username" />
-                    <Input placeholder="email" />
-                    <Input placeholder="password" />
-                    <Input placeholder="confirm password" />
+                    <Input placeholder="Username" onChange={e => setNewUser({ ...newUser, username: e.target.value })} />
+                    <Input placeholder="Email" type="email" onChange={e => setNewUser({ ...newUser, email: e.target.value })} />
+                    <Input placeholder="Password" type="password" onChange={e => setNewUser({ ...newUser, password: e.target.value })} />
                     <Agreement>
                         By creating an account, I consent to the processing of my personal data in accordance with the <b>PRIVACY POLICY</b>
                     </Agreement>
-                    <Button>CREATE</Button>
+                    {/* <Input type="submit" value="Send Request" /> */}
+                    <Button onClick={handleCreate}>CREATE</Button>
                 </Form>
             </Wrapper>
         </Container>
