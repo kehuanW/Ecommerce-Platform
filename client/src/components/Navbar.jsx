@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { tablet, mobile } from '../responsive'
 import { logOut } from '../redux/userRedux';
+import { useToasts } from 'react-toast-notifications';
 
 const Container = styled.div`
     height: 60px;
@@ -81,20 +82,33 @@ const Navbar = () => {
     const user = useSelector(state => state.user);
     const quantity = cart.quantity;
     // console.log("cart", cart);
+    const { addToast } = useToasts();
 
     const [searchContent, setSearchContent] = useState("");
 
     const dispatch = useDispatch();
     const handleLogOut = () => {
-        console.log("logout")
+        // console.log("logout")
         dispatch(logOut());
+        addToast("You've logged out", {
+            appearance: 'success',
+            autoDismiss: true,
+        })
+    }
+
+    const handleLanguage = () => {
+        const info = "You are now on the English page. Pages in other languages are still under development."
+        addToast(info, {
+            appearance: 'info',
+            autoDismiss: true,
+        })
     }
 
     return (
         <Container>
             <Wrapper>
                 <Left>
-                    <Language>EN</Language>
+                    <Language onClick={handleLanguage}>EN</Language>
                     <SearchContainer>
                         <Input placeholder="Search" onInput={(e) => setSearchContent(e.target.value)} />
                         <Link to={`/products?search=${searchContent}`}>

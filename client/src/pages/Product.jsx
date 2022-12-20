@@ -129,6 +129,7 @@ const Product = () => {
     const [color, setColor] = useState("");
     const [size, setSize] = useState("");
     const dispatch = useDispatch();
+    const { addToast } = useToasts();
 
     const handleAmount = (type) => {
         if (type === "dec") {
@@ -149,7 +150,7 @@ const Product = () => {
         getProduct();
     }, [itemId]);
 
-    const { addToast } = useToasts();
+
     const handleClick = () => {
         if (color !== "" && size !== "") {
             dispatch(addProduct({ ...product, amount, color, size }));
