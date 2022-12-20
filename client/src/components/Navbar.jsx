@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Search, ShoppingCartOutlined } from '@material-ui/icons';
+import { Search, ShoppingCartOutlined, FavoriteBorderOutlined } from '@material-ui/icons';
 import { Badge } from '@material-ui/core'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { tablet, mobile } from '../responsive'
+import { logOut } from '../redux/userRedux';
 
 const Container = styled.div`
     height: 60px;
@@ -77,10 +78,17 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
     const cart = useSelector(state => state.cart);
+    const user = useSelector(state => state.user);
     const quantity = cart.quantity;
     // console.log("cart", cart);
 
     const [searchContent, setSearchContent] = useState("");
+
+    const dispatch = useDispatch();
+    const handleLogOut = () => {
+        console.log("logout")
+        dispatch(logOut());
+    }
 
     return (
         <Container>
@@ -100,19 +108,37 @@ const Navbar = () => {
                     </Link>
                 </Center>
                 <Right>
-                    <Link to="/register" style={{ "textDecoration": "none" }}>
-                        <MenuItem>REGISTER</MenuItem>
-                    </Link>
-                    <Link to="/login" style={{ "textDecoration": "none" }}>
-                        <MenuItem>LOG IN</MenuItem>
-                    </Link>
-                    <Link to="/cart">
-                        <MenuItem>
-                            <Badge badgeContent={quantity} color="primary" overlap="rectangular">
-                                <ShoppingCartOutlined />
-                            </Badge>
-                        </MenuItem>
-                    </Link>
+                    {
+                        user.currentUser
+                            ? <>
+                                <MenuItem onClick={handleLogOut}>LOG OUT</MenuItem>
+                                {/* <Link to="/cart">
+                                    <MenuItem>
+                                        <Badge badgeContent={2} color="primary" overlap="rectangular">
+                                            <FavoriteBorderOutlined />
+                                        </Badge>
+                                    </MenuItem>
+                                </Link> */}
+                                <Link to="/cart">
+                                    <MenuItem>
+                                        <Badge badgeContent={quantity} color="primary" overlap="rectangular">
+                                            <ShoppingCartOutlined />
+                                        </Badge>
+                                    </MenuItem>
+                                </Link>
+                            </>
+                            : <>
+                                <Link to="/register" style={{ "textDecoration": "none" }}>
+                                    <MenuItem>REGISTER</MenuItem>
+                                </Link>
+                                <Link to="/login" style={{ "textDecoration": "none" }}>
+                                    <MenuItem>LOG IN</MenuItem>
+                                </Link>
+                            </>
+
+
+
+                    }
                 </Right>
             </Wrapper>
         </Container >

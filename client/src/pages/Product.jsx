@@ -12,6 +12,7 @@ import { tablet, mobile } from '../responsive';
 import { publicRequest } from '../requestMethods';
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
+import { useToasts } from 'react-toast-notifications';
 
 const Container = styled.div``
 const Wrapper = styled.div`
@@ -148,10 +149,21 @@ const Product = () => {
         getProduct();
     }, [itemId]);
 
+    const { addToast } = useToasts();
     const handleClick = () => {
-        dispatch(
-            addProduct({ ...product, amount, color, size })
-        );
+        if (color !== "" && size !== "") {
+            dispatch(addProduct({ ...product, amount, color, size }));
+            addToast("Successfully added", {
+                appearance: 'success',
+                autoDismiss: true,
+            })
+        } else {
+            const warning = "Please select color and size for the product."
+            addToast(warning, {
+                appearance: 'warning',
+                autoDismiss: true,
+            })
+        }
     };
 
     return (
@@ -174,6 +186,7 @@ const Product = () => {
                         <Filter>
                             <FilterTitle>Size</FilterTitle>
                             <FilterSize onChange={(e) => { setSize(e.target.value) }}>
+                                <FilterSizeOption>Select</FilterSizeOption>
                                 {product.size?.map((s) => <FilterSizeOption key={s} >{s.toUpperCase()}</FilterSizeOption>)}
                             </FilterSize>
                         </Filter>

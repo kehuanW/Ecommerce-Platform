@@ -1,7 +1,8 @@
-import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@material-ui/icons'
-import React from 'react'
-import styled from 'styled-components'
+import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@material-ui/icons';
+import React from 'react';
+import styled from 'styled-components';
 import { Link } from "react-router-dom";
+import { useToasts } from 'react-toast-notifications';
 
 const Info = styled.div`
     opacity:0;
@@ -67,7 +68,15 @@ const Icon = styled.div`
 `
 
 const Product = (props) => {
+    const { addToast } = useToasts();
     // console.log(props.item);
+    const handleClick = () => {
+        const info = "Thank you for your like. This feature is still under development. Please add to cart directly."
+        addToast(info, {
+            appearance: 'info',
+            autoDismiss: true,
+        });
+    }
     return (
         <Container>
             <Circle />
@@ -82,7 +91,7 @@ const Product = (props) => {
                     </Link>
                 </Icon>
                 <Icon>
-                    <FavoriteBorderOutlined />
+                    <FavoriteBorderOutlined onClick={handleClick} />
                 </Icon>
             </Info>
         </Container>

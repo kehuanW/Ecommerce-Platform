@@ -23,9 +23,10 @@ const Container = styled.div`
 `
 
 const Wrapper = styled.div`
-    width: 40%;
+    width: 20%;
     padding: 20px;
     background-color: white;
+    border-radius: 15px;
     ${tablet({ width: "50%" })};
     ${mobile({ width: "75%" })};
 `
@@ -38,7 +39,8 @@ const Title = styled.h1`
 
 const Form = styled.form`
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    // flex-wrap: wrap;
 `
 
 const Input = styled.input`

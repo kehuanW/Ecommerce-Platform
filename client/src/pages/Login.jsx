@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { useToasts } from 'react-toast-notifications';
+import { useNavigate } from 'react-router-dom';
 import { tablet, mobile } from '../responsive';
 import { login } from '../redux/apiCalls';
 
@@ -25,6 +26,7 @@ const Wrapper = styled.div`
     width: 25%;
     padding: 20px;
     background-color: white;
+    border-radius: 15px;
     ${tablet({ width: "50%" })};
     ${mobile({ width: "75%" })};
 `;
@@ -70,13 +72,27 @@ const Error = styled.span`
 `;
 
 const Login = () => {
+    const { addToast } = useToasts();
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const { isFetching, error } = useSelector(state => state.user);
     const handleLogin = (e) => {
         e.preventDefault();
-        login(dispatch, { username, password });
+        try {
+            login(dispatch, { username, password });
+            addToast("Login Successfully", {
+                appearance: 'success',
+                autoDismiss: true,
+            });
+            navigate("/");
+        } catch (err) {
+            addToast("Login Failure. Please try again!", {
+                appearance: 'error',
+                autoDismiss: true,
+            })
+        }
     };
 
     return (

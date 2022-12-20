@@ -7,7 +7,8 @@ import { Add, Remove } from '@material-ui/icons';
 import { tablet, mobile } from '../responsive';
 import { useSelector } from 'react-redux';
 import { userRequest } from '../requestMethods';
-import { useNavigate } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Container = styled.div``
@@ -169,6 +170,15 @@ const Cart = () => {
     // const navigate = useNavigate();
 
     const { cart, user } = useSelector(state => state);
+    const { addToast } = useToasts();
+
+    const handleWishList = () => {
+        const info = "Thank you for your like. This feature is still under development."
+        addToast(info, {
+            appearance: 'info',
+            autoDismiss: true,
+        });
+    }
 
     const handleCheckout = async () => {
         // console.log("handleCheckout");
@@ -190,12 +200,13 @@ const Cart = () => {
             <Wrapper>
                 <Title>YOUR BAG</Title>
                 <Top>
-                    <TopButton>CONTINUE SHOPPING</TopButton>
+                    <Link to="/">
+                        <TopButton>CONTINUE SHOPPING</TopButton>
+                    </Link>
                     <TopTexts>
-                        <TopText>Shopping Bag (2)</TopText>
-                        <TopText>Your Wishlist (0)</TopText>
+                        <TopText onClick={handleWishList}>Your Wishlist (0)</TopText>
                     </TopTexts>
-                    <TopButton type="filled">CHECKOUT NOW</TopButton>
+                    <TopButton type="filled" onClick={handleCheckout}>CHECKOUT NOW</TopButton>
                 </Top>
                 <Buttom>
                     <Info>
