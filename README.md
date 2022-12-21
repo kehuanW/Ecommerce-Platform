@@ -7,4 +7,4 @@ React + Express + Node.js + MongoDB
 - JWT
 - Stripe
 - React-Modal
-- nodeemailer
+- nodemailer
