@@ -96,6 +96,9 @@ const ProductColor = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 50%;
+    border-style: solid;
+    border-color: gray;
+    border-width: 1px;
     background-color: ${props => props.color};
 `;
 

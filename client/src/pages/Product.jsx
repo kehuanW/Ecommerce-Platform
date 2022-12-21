@@ -66,16 +66,16 @@ const FilterTitle = styled.span`
     font-size: 20px;
     font-weight: 200;
 `
-const FilterColor = styled.div`
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: ${props => props.color};
-    margin: 0px 5px;
-    cursor: pointer;
-    border-style: solid;
-    border-width: 1.5px;
-`
+// const FilterColor = styled.div`
+//     width: 20px;
+//     height: 20px;
+//     border-radius: 50%;
+//     background-color: ${props => props.color};
+//     margin: 0px 5px;
+//     cursor: pointer;
+//     border-style: solid;
+//     border-width: 1.5px;
+// `
 
 const FilterSize = styled.select`
     margin-left: 10px;
@@ -182,7 +182,11 @@ const Product = () => {
                     <FilterContainer>
                         <Filter >
                             <FilterTitle>Color</FilterTitle>
-                            {product.color?.map((c) => <FilterColor key={c} color={c} onClick={() => setColor(c)} />)}
+                            {/* {product.color?.map((c) => <FilterColor key={c} color={c} onClick={() => setColor(c)} />)} */}
+                            <FilterSize onChange={(e) => { setColor(e.target.value) }}>
+                                <FilterSizeOption>Select</FilterSizeOption>
+                                {product.color?.map((c) => <FilterSizeOption key={c} >{c[0].toUpperCase() + c.slice(1)}</FilterSizeOption>)}
+                            </FilterSize>
                         </Filter>
                         <Filter>
                             <FilterTitle>Size</FilterTitle>
