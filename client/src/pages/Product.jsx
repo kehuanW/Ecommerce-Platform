@@ -184,14 +184,14 @@ const Product = () => {
                             <FilterTitle>Color</FilterTitle>
                             {/* {product.color?.map((c) => <FilterColor key={c} color={c} onClick={() => setColor(c)} />)} */}
                             <FilterSize onChange={(e) => { setColor(e.target.value) }}>
-                                <FilterSizeOption>Select</FilterSizeOption>
+                                <FilterSizeOption value="">Choose</FilterSizeOption>
                                 {product.color?.map((c) => <FilterSizeOption key={c} >{c[0].toUpperCase() + c.slice(1)}</FilterSizeOption>)}
                             </FilterSize>
                         </Filter>
                         <Filter>
                             <FilterTitle>Size</FilterTitle>
                             <FilterSize onChange={(e) => { setSize(e.target.value) }}>
-                                <FilterSizeOption>Select</FilterSizeOption>
+                                <FilterSizeOption value="">Choose</FilterSizeOption>
                                 {product.size?.map((s) => <FilterSizeOption key={s} >{s.toUpperCase()}</FilterSizeOption>)}
                             </FilterSize>
                         </Filter>

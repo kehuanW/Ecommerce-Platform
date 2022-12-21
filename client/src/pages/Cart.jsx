@@ -64,6 +64,11 @@ const Info = styled.div`
     flex-direction: column;
 `;
 
+const EmptyCart = styled.p`
+    text-align: center;
+    padding: 50px
+`
+
 const Product = styled.div`
     display: flex;
     justify-content: space-between;
@@ -214,8 +219,8 @@ const Cart = () => {
                 <Buttom>
                     <Info>
                         {cart.products.length === 0
-                            ? "Your shopping cart is empty"
-                            : cart.products.map(item => (
+                            ? <EmptyCart>Your shopping cart is empty~</EmptyCart>
+                            : cart.products.map((item) => (
                                 <>
                                     <Product key={item._id}>
                                         <ProductDetail>
