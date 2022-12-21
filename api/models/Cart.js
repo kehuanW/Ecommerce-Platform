@@ -12,7 +12,15 @@ const CartSchema = new Schema(
                 quantity: {
                     type: Number,
                     default: 1,
-                }
+                },
+                color: {
+                    type: String,
+                    default: "",
+                },
+                size: {
+                    type: String,
+                    default: "",
+                },
             }
         ]
     },
