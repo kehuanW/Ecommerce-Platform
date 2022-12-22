@@ -1,7 +1,10 @@
-import { Send } from '@material-ui/icons'
-import React from 'react'
-import styled from 'styled-components'
-import { mobile } from '../responsive'
+import { Send } from '@material-ui/icons';
+import React from 'react';
+import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { useToasts } from 'react-toast-notifications';
+import { mobile } from '../responsive';
+import { publicRequest } from '../requestMethods'
 
 const Container = styled.div`
     height: 60vh;
@@ -24,7 +27,7 @@ const Description = styled.div`
     text-align: center;
 `
 
-const InputContainer = styled.div`
+const InputContainer = styled.form`
     background-color: white;
     width: 50%;
     height: 40px;
@@ -44,15 +47,72 @@ const Button = styled.button`
     border: none;
     background-color: teal;
     color: white;
+    cursor: pointer;
 `
 
 const Newsletter = () => {
+    const user = useSelector((state) => state.user);
+    console.log("newsletter", user);
+    const { addToast } = useToasts();
+
+    const handleSubmit = async (e) => {
+        // console.log("submit form")
+        e.preventDefault();
+
+        if (user.currentUser) {
+            const email = e.target[0].value;
+            const date = new Date().toISOString().slice(0, 10);
+            try {
+                const req = {
+                    "userId": user.currentUser._id,
+                    "date": date,
+                    "email": email
+                }
+                console.log(req);
+                const DBres = await publicRequest.post("/subscribe", req);
+                console.log("$$$$$$", DBres.status);
+                if (DBres.status === 201) {
+                    addToast("Subscription Success. Your email is accepted.", {
+                        appearance: 'success',
+                        autoDismiss: true,
+                    });
+                    await publicRequest.post("/subscribe/sendsgmail", { "userEmail": email });
+                    addToast("Thank you for subscribing. The lastest news has been sent to your mailbox.", {
+                        appearance: 'success',
+                        autoDismiss: true,
+                    });
+                    e.target[0].value = "";
+                } else if (DBres.status === 503) {
+                    addToast("Too much subscription for today. Please subscribe tomorrow.", {
+                        appearance: 'warning',
+                        autoDismiss: true,
+                    });
+                } else {
+                    addToast("Subscription Failure. Please try again.", {
+                        appearance: 'error',
+                        autoDismiss: true,
+                    });
+                }
+            } catch (error) {
+                addToast("Something wrong. Please try again.", {
+                    appearance: 'error',
+                    autoDismiss: true,
+                });
+            }
+        } else {
+            addToast("Please log in first.", {
+                appearance: 'error',
+                autoDismiss: true,
+            });
+        }
+
+    }
     return (
         <Container>
             <Title>Newsletter</Title>
             <Description>Get timely updates from your favourite products</Description>
-            <InputContainer>
-                <Input placeholder="Your email" />
+            <InputContainer onSubmit={handleSubmit}>
+                <Input placeholder="Your email" type="email" />
                 <Button>
                     <Send />
                 </Button>
