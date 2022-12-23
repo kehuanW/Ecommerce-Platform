@@ -20,7 +20,7 @@ const Success = () => {
             }}
         >
             Success
-            <button style={{ padding: 10, marginTop: 20 }} onClick={() => navigate('/home')}>Go to Homepage</button>
+            <button style={{ padding: 10, marginTop: 20 }} onClick={() => navigate('/')}>Go to Homepage</button>
         </div>
     )
 }

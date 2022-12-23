@@ -11,3 +11,11 @@ export const userRequest = axios.create({
     baseURL: BASE_URL,
     header: { token: `Bearer ${TOKEN}` },
 });
+
+
+export const userRequestNew = function (CLIENT_DOMAIN, currentUser) {
+    return axios.create({
+        baseURL: CLIENT_DOMAIN,
+        headers: { 'token': 'Bearer ' + currentUser.accessToken },
+    });
+}
