@@ -13,7 +13,7 @@ import { publicRequest } from '../requestMethods';
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { useToasts } from 'react-toast-notifications';
-import { addToCart } from '../redux/apiCalls';
+import { createCart, updateCart } from '../redux/apiCalls';
 
 const Container = styled.div``
 const Wrapper = styled.div`
@@ -124,6 +124,7 @@ const Button = styled.button`
 const Product = () => {
 
     const user = useSelector(state => state.user);
+    const cart = useSelector(state => state.cart);
     const location = useLocation();
     const itemId = location.pathname.split('/')[2]
     const [product, setProduct] = useState({});
@@ -155,15 +156,25 @@ const Product = () => {
 
     const handleClick = () => {
         if (color !== "" && size !== "") {
-            addToCart(dispatch, {
-                "currentUser": user.currentUser,
-                "products": [{ ...product, amount, color, size }]
-            })
-            // dispatch(addProduct({ ...product, amount, color, size }));
+            // addToCart(dispatch, {
+            //     "currentUser": user.currentUser,
+            //     "products": [{ ...product, amount, color, size }]
+            // })
+            dispatch(addProduct({ ...product, amount, color, size }));
             addToast("Successfully added", {
                 appearance: 'success',
                 autoDismiss: true,
-            })
+            });
+            // sync cart info in redux with that in DB
+            if (!cart.cartId) {
+                createCart(dispatch, {
+                    "currentUser": user.currentUser,
+                    "products": [{ ...product, amount, color, size }]
+                })
+            } else {
+                updateCart();
+            }
+
         } else {
             const warning = "Please select color and size for the product."
             addToast(warning, {

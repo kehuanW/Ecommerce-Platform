@@ -1,6 +1,6 @@
 import { loginFailure, loginSuccess, loginStart } from './userRedux';
 import { publicRequest, userRequestNew } from '../requestMethods';
-import { calCartTotal, fetchCart, createCart } from './cartRedux';
+import { calCartTotal, fetchCart } from './cartRedux';
 import { store } from './store';
 
 export const login = async (dispatch, user) => {
@@ -37,33 +37,22 @@ export const getUserCart = async (dispatch, currentUser) => {
 }
 
 
-export const addToCart = async (dispatch, data) => {
+export const createCart = async (dispatch, data) => {
 
     const { currentUser, products } = data;
-    console.log("---------", data)
+    // console.log("---------", data)
 
     const newCart = { "userId": currentUser._id, "products": products }
-    if (!store.getState().cart.cartId) {
-        userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, currentUser)
-            .post(`/carts`, newCart)
-            .then(res => dispatch(fetchCart(res.data)))
-            .catch(err => console.log("create new cart failure", err))
-    }
-    // try {
-    //     console.log("$$$$$##@@@@@", currentUser, currentUser._id);
-    //     const res = await userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, currentUser).get(`/carts/find/${currentUser._id}`);
-    //     console.log("apiCalls", res.data);
-    //     if (res.data) {
-    //         dispatch(fetchCart(res.data));
+    userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, currentUser)
+        .post(`/carts`, newCart)
+        .then(res => dispatch(fetchCart(res.data)))
+        .catch(err => console.log("create new cart in DB failure", err))
+}
 
-    //         let total = 0;
-    //         res.data.products.forEach((item) => {
-    //             total += item.price * item.amount;
-    //         })
-    //         dispatch(calCartTotal({ total: total }));
-    //     }
-
-    // } catch (err) {
-    //     console.log("Cart Loading Failure", err);
-    // }
+export const updateCart = async () => {
+    const { currentUser } = store.getState().user;
+    const { cartId, products } = store.getState().cart;
+    userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, currentUser)
+        .put(`/carts/${cartId}`, { "products": products })
+        .catch(err => console.log("cart update in DB failure", err));
 }

@@ -27,13 +27,12 @@ router.post('/', async (req, res) => {
 
 // UPDATE (add or remove products)
 router.put('/:cartId', async (req, res) => {
+    // console.log(req.body);
     try {
         const updatedCart = await Cart.findByIdAndUpdate(
-            req.params.id,
-            {
-                $set: req.body,
-            },
-            { new: true }
+            req.params.cartId,
+            req.body,
+            { new: true } //get new version of doc
         )
         res.status(200).json(updatedCart);
     } catch (err) {

@@ -90,7 +90,7 @@ const Navbar = () => {
 
     useEffect((() => {
         if (user.currentUser) {
-            // console.log("%%%***", user.currentUser);
+            console.log("%%%***!!!!!!!!", user.currentUser);
             getUserCart(dispatch, user.currentUser);
             // console.log(total);
         }
