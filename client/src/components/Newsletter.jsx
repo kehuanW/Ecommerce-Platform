@@ -1,10 +1,12 @@
 import { Send } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import { mobile } from '../responsive';
-import { publicRequest } from '../requestMethods'
+import { publicRequest, userRequestNew } from '../requestMethods';
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 const Container = styled.div`
     height: 60vh;
@@ -59,6 +61,7 @@ const Newsletter = () => {
         // console.log("submit form")
         e.preventDefault();
 
+        const CLIENT_DOMAIN = process.env.REACT_APP_CLIENT_DOMAIN;
         if (user.currentUser) {
             const email = e.target[0].value;
             const date = new Date().toISOString().slice(0, 10);
@@ -68,15 +71,16 @@ const Newsletter = () => {
                     "date": date,
                     "email": email
                 }
-                console.log(req);
-                const DBres = await publicRequest.post("/subscribe", req);
-                console.log("$$$$$$", DBres.status);
+                // console.log(req);
+                console.log(process.env.CLIENT_DOMAIN);
+                const DBres = await userRequestNew(CLIENT_DOMAIN, user.currentUser).post("/subscribe", req);
+                // console.log("$$$$$$", DBres.status);
                 if (DBres.status === 201) {
                     addToast("Subscription Success. Your email is accepted.", {
                         appearance: 'success',
                         autoDismiss: true,
                     });
-                    await publicRequest.post("/subscribe/sendsgmail", { "userEmail": email });
+                    await userRequestNew(CLIENT_DOMAIN, user.currentUser).post("/subscribe/sendsgmail", { "userEmail": email });
                     addToast("Thank you for subscribing. The lastest news has been sent to your mailbox.", {
                         appearance: 'success',
                         autoDismiss: true,

@@ -3,13 +3,17 @@ const { Schema, model } = mongoose;
 
 const CartSchema = new Schema(
     {
-        userId: { type: String, required: true },
+        // user: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'User',
+        // },
+        userId: { type: String, required: true, unique: true },
         products: [
             {
                 productId: {
                     type: String,
                 },
-                quantity: {
+                amount: {
                     type: Number,
                     default: 1,
                 },
@@ -21,8 +25,15 @@ const CartSchema = new Schema(
                     type: String,
                     default: "",
                 },
+                title: { type: String, required: true },
+                desc: { type: String, required: true },
+                img: { type: String, required: true },
+                price: { type: Number, required: true },
             }
-        ]
+        ],
+        quantity: {
+            type: Number
+        }
     },
 
     // timestamps: true, Mongoose will add two properties (createdAt and updatedAt) of type Date to your schema

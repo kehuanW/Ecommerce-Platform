@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications';
 import Modal from 'react-modal';
 import { addProduct } from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { createCart, updateCart } from '../redux/apiCalls';
 
 const Info = styled.div`
     opacity:0;
@@ -189,6 +190,8 @@ const Product = (props) => {
     const [amount, setAmount] = useState(1);
     const dispatch = useDispatch();
     const { addToast } = useToasts();
+    const user = useSelector(state => state.user);
+    const cart = useSelector(state => state.cart);
 
     // console.log(props.item);
     const handleLike = () => {
@@ -215,13 +218,40 @@ const Product = (props) => {
         }
     }
 
+    // const handleClick = () => {
+    //     if (color !== "" && size !== "") {
+    //         dispatch(addProduct({ ...props.item, amount, color, size }));
+    //         addToast("Successfully added", {
+    //             appearance: 'success',
+    //             autoDismiss: true,
+    //         })
+    //     } else {
+    //         const warning = "Please select color and size for the product."
+    //         addToast(warning, {
+    //             appearance: 'warning',
+    //             autoDismiss: true,
+    //         })
+    //     }
+    // };
+
     const handleClick = () => {
         if (color !== "" && size !== "") {
+
             dispatch(addProduct({ ...props.item, amount, color, size }));
             addToast("Successfully added", {
                 appearance: 'success',
                 autoDismiss: true,
-            })
+            });
+            // sync cart info in redux with that in DB
+            if (!cart.cartId) {
+                createCart(dispatch, {
+                    "currentUser": user.currentUser,
+                    "products": [{ ...props.item, amount, color, size }]
+                })
+            } else {
+                updateCart();
+            }
+
         } else {
             const warning = "Please select color and size for the product."
             addToast(warning, {

@@ -4,18 +4,6 @@ const Cart = require('../models/Cart');
 
 const router = express.Router();
 
-// CREATE CART
-router.post('/', verifyToken, async (req, res) => {
-    const newCart = new Cart(req.body);
-    try {
-        const savedCart = await newCart.save();
-        res.status(200).json(savedCart);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-})
-
-
 // GET USER CART
 router.get('/find/:userId', verifyTokenAndAuthorization, async (req, res) => {
     try {
@@ -26,7 +14,35 @@ router.get('/find/:userId', verifyTokenAndAuthorization, async (req, res) => {
     }
 })
 
-// GET CARTS
+// CREATE CART (add the first product to cart)
+router.post('/', verifyToken, async (req, res) => {
+    const newCart = new Cart(req.body);
+    try {
+        const savedCart = await newCart.save();
+        res.status(200).json(savedCart);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
+// UPDATE (add or remove products)
+router.put('/:userId/:cartId', verifyTokenAndAuthorization, async (req, res) => {
+    // console.log(req.body);
+    try {
+        const updatedCart = await Cart.findByIdAndUpdate(
+            req.params.cartId,
+            req.body,
+            { new: true } //get new version of doc
+        )
+        res.status(200).json(updatedCart);
+    } catch (err) {
+        console.log("UPDAT500", err)
+        res.status(500).json(err);
+    }
+});
+
+
+// GET CARTS (ADMIN)
 router.get('/', verifyTokenAndAdmin, async (req, res) => {
     try {
         const carts = await Cart.find();
@@ -37,31 +53,14 @@ router.get('/', verifyTokenAndAdmin, async (req, res) => {
 })
 
 
-// UPDATE
-router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
-    try {
-        const updatedCart = await Cart.findByIdAndUpdate(
-            req.params.id,
-            {
-                $set: req.body,
-            },
-            { new: true }
-        )
-        res.status(200).json(updatedCart);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
-
-
-// DELETE
-router.delete('/:id', verifyTokenAndAuthorization, async (req, res) => {
-    try {
-        await Cart.findByIdAndDelete(req.params.id);
-        res.status(200).json("Cart has been deleted...");
-    } catch (error) {
-        res.status(500).json(err);
-    }
-})
+// // DELETE (after checkout)
+// router.delete('/:id', async (req, res) => {
+//     try {
+//         await Cart.findByIdAndDelete(req.params.id);
+//         res.status(200).json("Cart has been deleted...");
+//     } catch (error) {
+//         res.status(500).json(err);
+//     }
+// })
 
 module.exports = router;

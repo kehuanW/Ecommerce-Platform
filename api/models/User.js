@@ -10,6 +10,11 @@ const UserSchema = new Schema(
             type: Boolean,
             default: false,
         },
+        // cart: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'Cart',
+        //     default: {}
+        // }
     },
 
     // timestamps: true, Mongoose will add two properties (createdAt and updatedAt) of type Date to your schema
