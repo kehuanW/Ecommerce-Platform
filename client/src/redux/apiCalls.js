@@ -53,6 +53,6 @@ export const updateCart = async () => {
     const { currentUser } = store.getState().user;
     const { cartId, products } = store.getState().cart;
     userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, currentUser)
-        .put(`/carts/${cartId}`, { "products": products })
+        .put(`/carts/${currentUser._id}/${cartId}`, { "products": products })
         .catch(err => console.log("cart update in DB failure", err));
 }

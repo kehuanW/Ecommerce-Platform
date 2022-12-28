@@ -1,13 +1,13 @@
 const express = require('express');
 const sgMail = require('@sendgrid/mail');
-const { verifyTokenAndAuthorization } = require('./verifyToken');
+const { verifyTokenAndAuthorization, verifyToken } = require('./verifyToken');
 const Subscription = require('../models/Subscription');
 
 const router = express.Router();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 // SEND EMAIL
-router.post('/sendsgmail', verifyTokenAndAuthorization, async (req, res) => {
+router.post('/sendsgmail', verifyToken, async (req, res) => {
     const userEmail = req.body.userEmail
     const msg = {
         to: userEmail, // Change to your recipient
@@ -35,7 +35,7 @@ router.post('/sendsgmail', verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //ADD TO DB EMAIL LIST
-router.post('/', verifyTokenAndAuthorization, async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
     console.log("******", req);
     const userId = req.body.userId;
     const email = req.body.email;

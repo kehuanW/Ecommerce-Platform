@@ -25,7 +25,7 @@ const CartSchema = new Schema(
                     type: String,
                     default: "",
                 },
-                title: { type: String, required: true, unique: true },
+                title: { type: String, required: true },
                 desc: { type: String, required: true },
                 img: { type: String, required: true },
                 price: { type: Number, required: true },
