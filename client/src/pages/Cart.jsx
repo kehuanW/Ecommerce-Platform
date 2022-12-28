@@ -4,12 +4,15 @@ import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
 import { Add, Remove } from '@material-ui/icons';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { tablet, mobile } from '../responsive';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userRequest } from '../requestMethods';
 import { useToasts } from 'react-toast-notifications';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { removeProduct } from '../redux/cartRedux';
+import { updateCart } from '../redux/apiCalls';
 
 const Container = styled.div``
 
@@ -110,12 +113,21 @@ const ProductColor = styled.div`
 const ProductSize = styled.span``;
 
 const PriceDetail = styled.div`
-    flex: 1;
+    flex: 0.5;
     display: flex;
     flex-direction: column;
     align-items:center;
     justify-content: center
 `;
+
+const DeleteContainer = styled.div`
+    flex: 0.3;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    cursor: pointer;
+`
 
 const ProductAmountContainer = styled.div`
     display: flex;
@@ -178,8 +190,9 @@ const Cart = () => {
     // const navigate = useNavigate();
 
     const { cart, user } = useSelector(state => state);
-    console.log("$$$$$$$$$$", cart);
+    // console.log("$$$$$$$$$$", cart);
     const { addToast } = useToasts();
+    const dispatch = useDispatch();
 
     const handleWishList = () => {
         const info = "Thank you for your like. This feature is still under development."
@@ -202,6 +215,15 @@ const Cart = () => {
         };
     }
 
+    const handleRemoveProduct = async (ind) => {
+        dispatch(removeProduct({ "ind": ind, "removedProduct": cart.products[ind] }));
+        addToast("Removed Successfully", {
+            appearance: 'success',
+            autoDismiss: true,
+        });
+        updateCart();
+    }
+
     return (
         <Container>
             <Navbar />
@@ -221,9 +243,9 @@ const Cart = () => {
                     <Info>
                         {cart.products.length === 0
                             ? <EmptyCart>Your shopping cart is empty~</EmptyCart>
-                            : cart.products.map((item) => (
-                                <>
-                                    <Product key={item._id}>
+                            : cart.products.map((item, ind) => (
+                                <div key={ind}>
+                                    <Product >
                                         <ProductDetail>
                                             <Image src={item.img} />
                                             <Details>
@@ -241,9 +263,12 @@ const Cart = () => {
                                             </ProductAmountContainer>
                                             <ProductPrice>$ {item.price * item.amount}</ProductPrice>
                                         </PriceDetail>
+                                        <DeleteContainer>
+                                            <DeleteOutlineOutlinedIcon onClick={() => handleRemoveProduct(ind)} />
+                                        </DeleteContainer>
                                     </Product>
                                     <Hr />
-                                </>
+                                </div>
                             ))}
 
                     </Info>

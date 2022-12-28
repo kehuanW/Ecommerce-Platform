@@ -156,10 +156,7 @@ const Product = () => {
 
     const handleClick = () => {
         if (color !== "" && size !== "") {
-            // addToCart(dispatch, {
-            //     "currentUser": user.currentUser,
-            //     "products": [{ ...product, amount, color, size }]
-            // })
+
             dispatch(addProduct({ ...product, amount, color, size }));
             addToast("Successfully added", {
                 appearance: 'success',

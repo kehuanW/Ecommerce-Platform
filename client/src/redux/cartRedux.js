@@ -32,6 +32,13 @@ const cartSlice = createSlice({
             // console.log("payload", action.payload);
         },
 
+        removeProduct: (state, action) => {
+            const { ind, removedProduct } = action.payload;
+            state.quantity -= 1;
+            state.products.splice(ind, 1);
+            state.total -= removedProduct.price * removedProduct.amount;
+        },
+
         clearCartInfo(state, action) { //对应logout
             state.cartId = "";
             state.products = [];
@@ -48,5 +55,5 @@ const cartSlice = createSlice({
     },
 });
 
-export const { fetchCart, calCartTotal, addProduct, clearCartInfo, checkOutWholeCart } = cartSlice.actions;
+export const { fetchCart, calCartTotal, addProduct, clearCartInfo, checkOutWholeCart, removeProduct } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -3,7 +3,7 @@ import { Search, ShoppingCartOutlined, FavoriteBorderOutlined } from '@material-
 import { Badge } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { tablet, mobile } from '../responsive'
 import { logOut } from '../redux/userRedux';
 import { useToasts } from 'react-toast-notifications';
@@ -87,6 +87,7 @@ const Navbar = () => {
     const { addToast } = useToasts();
     const [searchContent, setSearchContent] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect((() => {
         if (user.currentUser) {
@@ -104,7 +105,9 @@ const Navbar = () => {
         addToast("You've logged out", {
             appearance: 'success',
             autoDismiss: true,
-        })
+        });
+
+        navigate('/');
     }
 
     const handleLanguage = () => {

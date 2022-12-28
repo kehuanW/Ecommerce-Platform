@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom'
+import { updateCart } from '../redux/apiCalls';
 import { checkOutWholeCart } from "../redux/cartRedux";
 
 const Success = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    useEffect(() => dispatch(checkOutWholeCart()), [dispatch]);
+    useEffect(() => {
+        dispatch(checkOutWholeCart());
+        updateCart();
+    }, [dispatch]);
 
 
     return (
