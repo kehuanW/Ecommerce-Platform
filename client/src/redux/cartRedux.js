@@ -32,15 +32,21 @@ const cartSlice = createSlice({
             // console.log("payload", action.payload);
         },
 
-        clearCart(state, action) {
+        clearCartInfo(state, action) { //对应logout
             state.cartId = "";
             state.products = [];
             state.quantity = 0;
             state.total = 0;
             // toast.success("Cart cleared");
         },
+
+        checkOutWholeCart(state, action) {
+            state.products = [];
+            state.quantity = 0;
+            state.total = 0;
+        }
     },
 });
 
-export const { fetchCart, calCartTotal, addProduct, clearCart } = cartSlice.actions;
+export const { fetchCart, calCartTotal, addProduct, clearCartInfo, checkOutWholeCart } = cartSlice.actions;
 export default cartSlice.reducer;

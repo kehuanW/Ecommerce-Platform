@@ -8,7 +8,7 @@ import { tablet, mobile } from '../responsive'
 import { logOut } from '../redux/userRedux';
 import { useToasts } from 'react-toast-notifications';
 import { getUserCart } from '../redux/apiCalls';
-import { clearCart } from '../redux/cartRedux';
+import { clearCartInfo } from '../redux/cartRedux';
 
 const Container = styled.div`
     height: 60px;
@@ -99,7 +99,7 @@ const Navbar = () => {
     const handleLogOut = () => {
         // console.log("logout")
         dispatch(logOut());
-        dispatch(clearCart());
+        dispatch(clearCartInfo());
 
         addToast("You've logged out", {
             appearance: 'success',

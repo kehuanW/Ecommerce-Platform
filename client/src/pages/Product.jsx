@@ -11,8 +11,9 @@ import Footer from '../components/Footer';
 import { tablet, mobile } from '../responsive';
 import { publicRequest } from '../requestMethods';
 import { addProduct } from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useToasts } from 'react-toast-notifications';
+import { addToCart } from '../redux/apiCalls';
 
 const Container = styled.div``
 const Wrapper = styled.div`
@@ -122,6 +123,7 @@ const Button = styled.button`
 
 const Product = () => {
 
+    const user = useSelector(state => state.user);
     const location = useLocation();
     const itemId = location.pathname.split('/')[2]
     const [product, setProduct] = useState({});
@@ -153,7 +155,11 @@ const Product = () => {
 
     const handleClick = () => {
         if (color !== "" && size !== "") {
-            dispatch(addProduct({ ...product, amount, color, size }));
+            addToCart(dispatch, {
+                "currentUser": user.currentUser,
+                "products": [{ ...product, amount, color, size }]
+            })
+            // dispatch(addProduct({ ...product, amount, color, size }));
             addToast("Successfully added", {
                 appearance: 'success',
                 autoDismiss: true,
