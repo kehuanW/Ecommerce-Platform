@@ -178,6 +178,7 @@ const Cart = () => {
     // const navigate = useNavigate();
 
     const { cart, user } = useSelector(state => state);
+    console.log("$$$$$$$$$$", cart);
     const { addToast } = useToasts();
 
     const handleWishList = () => {

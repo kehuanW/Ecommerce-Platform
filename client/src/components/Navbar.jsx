@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, ShoppingCartOutlined, FavoriteBorderOutlined } from '@material-ui/icons';
 import { Badge } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { tablet, mobile } from '../responsive'
 import { logOut } from '../redux/userRedux';
 import { useToasts } from 'react-toast-notifications';
+import { getUserCart } from '../redux/apiCalls';
+import { clearCart } from '../redux/cartRedux';
 
 const Container = styled.div`
     height: 60px;
@@ -83,13 +85,22 @@ const Navbar = () => {
     const quantity = cart.quantity;
     // console.log("cart", cart);
     const { addToast } = useToasts();
-
     const [searchContent, setSearchContent] = useState("");
-
     const dispatch = useDispatch();
+
+    useEffect((() => {
+        if (user.currentUser) {
+            // console.log("%%%***", user.currentUser);
+            getUserCart(dispatch, user.currentUser);
+            // console.log(total);
+        }
+    }), [user.currentUser])
+
     const handleLogOut = () => {
         // console.log("logout")
         dispatch(logOut());
+        dispatch(clearCart());
+
         addToast("You've logged out", {
             appearance: 'success',
             autoDismiss: true,
@@ -118,7 +129,7 @@ const Navbar = () => {
                 </Left>
                 <Center>
                     <Link to="/" style={{ "textDecoration": "none" }}>
-                        <Logo>LAMA.</Logo>
+                        <Logo>TODAY</Logo>
                     </Link>
                 </Center>
                 <Right>

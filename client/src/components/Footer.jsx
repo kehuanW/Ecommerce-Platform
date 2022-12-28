@@ -80,7 +80,7 @@ const Footer = () => {
     return (
         <Container>
             <Left>
-                <Logo>LAMA.</Logo>
+                <Logo>TODAY</Logo>
                 <Desc>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo ipsum similique officiis eaque explicabo aspernatur nisi quia ea. Rerum fuga quibusdam ab, odit deserunt alias similique laboriosam. Eos, obcaecati tempore?
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit aperiam perferendis alias neque magni enim minima dolor repellendus assumenda, quidem incidunt corporis, praesentium voluptatum!
                 </Desc>
@@ -121,7 +121,7 @@ const Footer = () => {
                     <Phone style={{ marginRight: "10px" }} /> +1 234 567 890
                 </ContactItem>
                 <ContactItem>
-                    <MailOutline style={{ marginRight: "10px" }} /> contact@lama.com
+                    <MailOutline style={{ marginRight: "10px" }} /> contact@today.com
                 </ContactItem>
                 <Payment src="https://images.contentstack.io/v3/assets/bltee50a64aa85c8d90/blt1b4b0326d03391c3/615a92367e4c056146cb65fa/payment_methods.jpg" />
             </Right>

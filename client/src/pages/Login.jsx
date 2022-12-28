@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import { useNavigate, Link } from 'react-router-dom';
 import { tablet, mobile } from '../responsive';
-import { login } from '../redux/apiCalls';
+import { login, getUserCart } from '../redux/apiCalls';
+import { useEffect } from 'react';
 
 const Container = styled.div`
     width: 100vw;
@@ -78,6 +79,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const { isFetching, error } = useSelector(state => state.user);
+
     const handleLogin = (e) => {
         e.preventDefault();
         try {
