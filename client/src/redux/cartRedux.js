@@ -16,10 +16,17 @@ const cartSlice = createSlice({
             state.cartId = _id;
             state.products = products;
             state.quantity = products.length;
+            //calculate stateTotal by calCartTotal
         },
 
         calCartTotal: (state, action) => {
-            state.total = action.payload.total;
+            // console.log(state.products)
+            let total = 0;
+            state.products.forEach((item) => {
+                total += item.price * item.amount;
+            })
+            // state.total = action.payload.total;
+            state.total = total;
         },
 
         addProduct: (state, action) => {
@@ -30,6 +37,18 @@ const cartSlice = createSlice({
             // console.log("state.products", state.products);
             // console.log("state.products", state.total);
             // console.log("payload", action.payload);
+        },
+
+        increaseAmount: (state, action) => {
+            const { ind } = action.payload;
+            state.products[ind].amount += 1;
+            //calculate stateTotal by calCartTotal
+        },
+
+        decreaseAmount: (state, action) => {
+            const { ind } = action.payload;
+            state.products[ind].amount -= 1;
+            //calculate stateTotal by calCartTotal
         },
 
         removeProduct: (state, action) => {
@@ -55,5 +74,5 @@ const cartSlice = createSlice({
     },
 });
 
-export const { fetchCart, calCartTotal, addProduct, clearCartInfo, checkOutWholeCart, removeProduct } = cartSlice.actions;
+export const { fetchCart, calCartTotal, addProduct, clearCartInfo, checkOutWholeCart, removeProduct, increaseAmount, decreaseAmount } = cartSlice.actions;
 export default cartSlice.reducer;

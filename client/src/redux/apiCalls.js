@@ -23,12 +23,12 @@ export const getUserCart = async (dispatch, currentUser) => {
         // console.log("apiCalls", res.data);
         if (res.data) {
             dispatch(fetchCart(res.data));
-
-            let total = 0;
-            res.data.products.forEach((item) => {
-                total += item.price * item.amount;
-            })
-            dispatch(calCartTotal({ total: total }));
+            // let total = 0;
+            // res.data.products.forEach((item) => {
+            //     total += item.price * item.amount;
+            // })
+            // dispatch(calCartTotal({ total: total }));
+            dispatch(calCartTotal());
         }
 
     } catch (err) {

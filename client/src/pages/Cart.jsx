@@ -11,7 +11,7 @@ import { userRequest } from '../requestMethods';
 import { useToasts } from 'react-toast-notifications';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { removeProduct } from '../redux/cartRedux';
+import { increaseAmount, decreaseAmount, removeProduct, calCartTotal } from '../redux/cartRedux';
 import { updateCart } from '../redux/apiCalls';
 
 const Container = styled.div``
@@ -181,6 +181,7 @@ const SummaryButton = styled.button`
     color: white;
     padding: 10px;
     width: 100%;
+    cursor: pointer;
 `;
 
 
@@ -224,6 +225,21 @@ const Cart = () => {
         updateCart();
     }
 
+    const handleIncreaseAmount = (ind) => {
+        dispatch(increaseAmount({ "ind": ind }));
+        dispatch(calCartTotal());
+        updateCart();
+    }
+
+    const handleDecreaseAmount = (ind) => {
+        //amount >= 1
+        if (cart.products[ind].amount >= 2) {
+            dispatch(decreaseAmount({ "ind": ind }));
+            dispatch(calCartTotal());
+            updateCart();
+        }
+    }
+
     return (
         <Container>
             <Navbar />
@@ -257,9 +273,9 @@ const Cart = () => {
                                         </ProductDetail>
                                         <PriceDetail>
                                             <ProductAmountContainer>
-                                                <Add />
+                                                <Add onClick={() => handleIncreaseAmount(ind)} />
                                                 <ProductAmount>{item.amount}</ProductAmount>
-                                                <Remove />
+                                                <Remove onClick={() => handleDecreaseAmount(ind)} />
                                             </ProductAmountContainer>
                                             <ProductPrice>$ {item.price * item.amount}</ProductPrice>
                                         </PriceDetail>
