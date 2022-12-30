@@ -184,7 +184,9 @@ const Navbar = () => {
                                             <AccountCircleOutlinedIcon />
                                         </DropdownBtn>
                                         <DropdownContent>
-                                            <DropdownLink>Orders</DropdownLink>
+                                            <Link to="/orders" style={{ "textDecoration": "none" }}>
+                                                <DropdownLink>Orders</DropdownLink>
+                                            </Link>
                                             <DropdownLink>My Account</DropdownLink>
                                             <DropdownLink onClick={handleLogOut}>Logout</DropdownLink>
                                         </DropdownContent>

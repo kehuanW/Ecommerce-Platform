@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import { useState } from 'react';
-import PurchasedItem from './PurchasedItem'
 
 const Container = styled.div`
     display:flex;
@@ -91,15 +90,11 @@ const CollapseBtn = styled.div`
     cursor: pointer;
 `
 
-const Order = (props) => {
+const PurchasedItem = (props) => {
     const [fold, setFold] = useState("none");
-    const { products, quantity, address, status, createdAt, _id } = props.savedOrder;
-    // let items = []
-    // for (let i = 0; i < products.length; i++) {
-    //     items.push({ ...products[i], quantity, address, status, createdAt, _id })
-    // }
-    let items = products.map((item) => ({ ...item, quantity, address, status, createdAt, _id }));
-    console.log("++++++++++++++++", items)
+    const item = props.item;
+    console.log("$$$$$$$$$$$$$$$", item)
+    // const { products, quantity, address, status, createdAt, _id } = props.savedOrder
     // const saveOrder = props.savedOrder;
     // const savedOrder = {
     //     userId: '639011c32650e0a84c8bb231',
@@ -134,53 +129,50 @@ const Order = (props) => {
 
 
     return (
-        // <div>orders</div>
-        items.map((item) => <PurchasedItem item={item} />
-            // <Container>
-            //     <Wapper>
-            //         <PurchasedItem item={item} />
-            //         <ProductionInfo>
-            //             <Body>
-            //                 <Left>
-            //                     <ProductImage>Image</ProductImage>
-            //                 </Left>
-            //                 <Right>
+        <Container>
+            <Wapper>
+                <PurchasedItem item={item} />
+                <ProductionInfo>
+                    <Body>
+                        <Left>
+                            <ProductImage>Image</ProductImage>
+                        </Left>
+                        <Right>
 
-            //                     <ProductDetail>ProductId: {item._id}</ProductDetail>
-            //                     <ProductSpec>
-            //                         <ProductDetail>Color: {item.color}</ProductDetail>
-            //                         <ProductDetail>Size: {item.size}</ProductDetail>
-            //                     </ProductSpec>
-            //                     <ProductPay>
-            //                         <ProductDetail>Amount: {item.quantity}</ProductDetail>
-            //                         <ProductTotal>Total: $10</ProductTotal>
-            //                     </ProductPay>
-            //                 </Right>
-            //             </Body>
-            //             <ExpandBtn onClick={() => setFold("block")} fold={fold}>
-            //                 <ExpandMoreOutlinedIcon />
-            //             </ExpandBtn>
-            //         </ProductionInfo>
+                            <ProductDetail>ProductId: {item._id}</ProductDetail>
+                            <ProductSpec>
+                                <ProductDetail>Color: {item.color}</ProductDetail>
+                                <ProductDetail>Size: {item.size}</ProductDetail>
+                            </ProductSpec>
+                            <ProductPay>
+                                <ProductDetail>Amount: {item.quantity}</ProductDetail>
+                                <ProductTotal>Total: $10</ProductTotal>
+                            </ProductPay>
+                        </Right>
+                    </Body>
+                    <ExpandBtn onClick={() => setFold("block")} fold={fold}>
+                        <ExpandMoreOutlinedIcon />
+                    </ExpandBtn>
+                </ProductionInfo>
 
-            //         <OrderInfo fold={fold}>
-            //             <OrderStatus>Status: {status}</OrderStatus>
-            //             <TextInfo>Order Id: {_id}</TextInfo>
-            //             <TextInfo>Created At</TextInfo>
-            //             <Address>
-            //                 <AddressInfoTitle>ADDRESS</AddressInfoTitle>
-            //                 <AddressInfo>City</AddressInfo>
-            //                 <AddressInfo>State</AddressInfo>
-            //                 <AddressInfo>Country</AddressInfo>
-            //                 <AddressInfo>Postcode</AddressInfo>
-            //             </Address>
-            //             <CollapseBtn onClick={() => setFold("none")}>
-            //                 <ExpandLessOutlinedIcon />
-            //             </CollapseBtn>
-            //         </OrderInfo>
-            //     </Wapper>
-            // </Container>
-        )
+                <OrderInfo fold={fold}>
+                    <OrderStatus>Status: {item.status}</OrderStatus>
+                    <TextInfo>Order Id: {item._id}</TextInfo>
+                    <TextInfo>Created At</TextInfo>
+                    <Address>
+                        <AddressInfoTitle>ADDRESS</AddressInfoTitle>
+                        <AddressInfo>City</AddressInfo>
+                        <AddressInfo>State</AddressInfo>
+                        <AddressInfo>Country</AddressInfo>
+                        <AddressInfo>Postcode</AddressInfo>
+                    </Address>
+                    <CollapseBtn onClick={() => setFold("none")}>
+                        <ExpandLessOutlinedIcon />
+                    </CollapseBtn>
+                </OrderInfo>
+            </Wapper>
+        </Container>
     )
 }
 
-export default Order;
+export default PurchasedItem;

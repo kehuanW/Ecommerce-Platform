@@ -54,7 +54,7 @@ const Button = styled.button`
 
 const Newsletter = () => {
     const user = useSelector((state) => state.user);
-    console.log("newsletter", user);
+
     const { addToast } = useToasts();
 
     const handleSubmit = async (e) => {

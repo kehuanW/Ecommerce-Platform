@@ -41,7 +41,7 @@ router.post('/payment',
                 quantity: item.amount,
             };
         });
-        console.log("myline_items", line_items[0].price_data.product_data);
+        // console.log("myline_items", line_items[0].price_data.product_data);
 
         const session = await stripe.checkout.sessions.create({
             shipping_address_collection: { allowed_countries: ['AU', 'US'] },
@@ -102,7 +102,9 @@ router.post('/webhook',
                 expand: ['data.price.product'],
             });
 
-            const purchaseItems = line_items.data.map((i) => {
+            // console.log("*******", line_items.data.price.product);
+
+            const purchaseItems = line_items.data.map(async (i) => {
                 let itemMetaDataObject = i.price.product.metadata;
                 itemMetaDataObject.quantity = i.quantity;
                 return itemMetaDataObject;
@@ -121,6 +123,7 @@ router.post('/webhook',
             const session = await stripe.checkout.sessions.retrieve(event.data.object.id);
             const purchaseAddress = session.customer_details.address;
             // console.log("address", address);
+            console.log("((((", session)
 
             try {
                 creatOrder(purchaseCustomer, purchaseItems, purchaseAddress);
