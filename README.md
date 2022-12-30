@@ -14,7 +14,7 @@ React + Express + Node.js + MongoDB
 - Update Profile/Password User Account (ongoing)
 - Subscribe newsletter (finished)
 - Cart Add Items | Update Quantities (finished)
-- Cart Remove Items (ongoing)
+- Cart Remove Items (finished)
 - Products Pagination (finished)
 - Product Search (finished)
 - Product Filters Based on category/color (finished)

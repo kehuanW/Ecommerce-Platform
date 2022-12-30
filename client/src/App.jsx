@@ -7,7 +7,7 @@ import Login from './pages/Login';
 import Cart from './pages/Cart';
 import Success from './pages/CheckoutSuccess';
 import Failure from './pages/CheckoutFailure';
-import MyModal from './pages/Modal'
+import OrderList from './pages/OrderList'
 
 const App = () => {
   return (
@@ -23,7 +23,7 @@ const App = () => {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/success" element={<Success />}></Route>
           <Route path="/failure" element={<Failure />}></Route>
-          <Route path="/modal" element={<MyModal />}></Route>
+          <Route path="/orders" element={<OrderList />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
