@@ -10,14 +10,14 @@ React + Express + Node.js + MongoDB
 - SendGrid
 
 ### Features
-- Login/Signup User Account (finished)
-- Update Profile/Password User Account (ongoing)
-- Subscribe newsletter (finished)
-- Cart Add Items | Update Quantities (finished)
-- Cart Remove Items (finished)
-- Products Pagination (finished)
-- Product Search (finished)
-- Product Filters Based on category/color (finished)
-- Sort products by price (finished)
-- checkout with Stripe (finished)
-- user order list (ongoing)
+- Register/login/logout user account
+- Update user profile/password (ongoing)
+- Subscribe the newsletter
+- Add Items to cart and update Quantities
+- Remove Items from cart
+- Products pagination
+- Product search
+- Product filters Based on category/color
+- Sort products by price
+- Checkout with Stripe
+- List user's orders (ongoing)
