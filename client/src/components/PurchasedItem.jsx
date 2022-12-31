@@ -93,45 +93,10 @@ const CollapseBtn = styled.div`
 const PurchasedItem = (props) => {
     const [fold, setFold] = useState("none");
     const item = props.item;
-    console.log("$$$$$$$$$$$$$$$", item)
-    // const { products, quantity, address, status, createdAt, _id } = props.savedOrder
-    // const saveOrder = props.savedOrder;
-    // const savedOrder = {
-    //     userId: '639011c32650e0a84c8bb231',
-    //     products: [
-    //         {
-    //             color: 'green',
-    //             size: 'l',
-    //             quantity: 2,
-    //             // _id: new ObjectId("63ae3c5f446e4e39502e0070")
-    //         },
-    //         {
-    //             color: 'White',
-    //             size: 'XS',
-    //             quantity: 1,
-    //             // _id: new ObjectId("63ae3c5f446e4e39502e0071")
-    //         }
-    //     ],
-    //     quantity: 2,
-    //     address: {
-    //         city: 'Adelaide',
-    //         country: 'AU',
-    //         line1: '201/304 Waymouth Street',
-    //         line2: null,
-    //         postal_code: '5000',
-    //         state: 'SA'
-    //     },
-    //     status: 'pending',
-    //     // _id: new ObjectId("63ae3c5f446e4e39502e006f"),
-    //     createdAt: "2022-12-30T01:18:23.933Z",
-    //     updatedAt: "2022-12-30T01:18:23.933Z"
-    // }
-
 
     return (
         <Container>
             <Wapper>
-                <PurchasedItem item={item} />
                 <ProductionInfo>
                     <Body>
                         <Left>
@@ -161,10 +126,10 @@ const PurchasedItem = (props) => {
                     <TextInfo>Created At</TextInfo>
                     <Address>
                         <AddressInfoTitle>ADDRESS</AddressInfoTitle>
-                        <AddressInfo>City</AddressInfo>
-                        <AddressInfo>State</AddressInfo>
-                        <AddressInfo>Country</AddressInfo>
-                        <AddressInfo>Postcode</AddressInfo>
+                        <AddressInfo>City: {item.address.city}</AddressInfo>
+                        <AddressInfo>State: {item.address.state}</AddressInfo>
+                        <AddressInfo>Country: {item.address.country}</AddressInfo>
+                        <AddressInfo>Postcode: {item.address.postcode}</AddressInfo>
                     </Address>
                     <CollapseBtn onClick={() => setFold("none")}>
                         <ExpandLessOutlinedIcon />
