@@ -65,7 +65,7 @@ const creatOrder = async (purchaseCustomer, purchaseItems, purchaseAddress) => {
     const newOrder = new Order(order);
     try {
         const savedOrder = await newOrder.save();
-        // console.log("Processed Order:", savedOrder);
+        console.log("Processed Order:", savedOrder);
     } catch (err) {
         console.log("creatOrder error", err);
     }
@@ -102,25 +102,31 @@ router.post('/webhook',
                 expand: ['data.price.product'],
             });
 
+            // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            // console.log("*******line_items.data", line_items.data);
+            // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            // console.log("########line_items.data[0].price", line_items.data[0].price);
+            // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            // console.log("*******line_items.data[0].price.product", line_items.data[0].price.product);
+
             const purchaseItems = line_items.data.map((i) => {
-                let itemMetaDataObject = i.price.product.metadata;
+                let itemMetaDataObject = {
+                    ...i.price.product.metadata,
+                    "img": i.price.product.images[0],
+                    "title": i.price.product.name,
+                    "desc": i.price.product.description,
+                    "price": i.price.unit_amount / 100,
+                };
                 itemMetaDataObject.quantity = i.quantity;
                 return itemMetaDataObject;
             });
-            // purchaseItems [
-            //     {
-            //       id: '6391c0dc745437030d0be281',
-            //       color: 'yellow',
-            //       size: 'M',
-            //       quantity: 2
-            //     },
-            //     { id: '6391c2e0745437030d0be287', color: 'green', quantity: 1 }
-            //   ]
+            // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
             // console.log("purchaseItems", purchaseItems);
 
             const session = await stripe.checkout.sessions.retrieve(event.data.object.id);
             const purchaseAddress = session.customer_details.address;
             // console.log("address", address);
+            // console.log("((((", session)
 
             try {
                 creatOrder(purchaseCustomer, purchaseItems, purchaseAddress);

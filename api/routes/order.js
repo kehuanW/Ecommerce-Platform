@@ -5,7 +5,7 @@ const Order = require('../models/Order');
 const router = express.Router();
 
 // GET USER ORDERS
-router.get('/find/:userId', verifyTokenAndAuthorization, async (req, res) => {
+router.get('/find/:userId', async (req, res) => {
     try {
         const orders = await Order.find({ userId: req.params.userId });
         res.status(200).json(orders);

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Search, ShoppingCartOutlined, FavoriteBorderOutlined } from '@material-ui/icons';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { Badge } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -79,6 +80,36 @@ const MenuItem = styled.div`
     ${tablet({ fontSize: "12px", marginLeft: "10px" })}
 `
 
+const Dropdown = styled.div`
+    position: relative;
+    display: inline-block;
+`
+
+const DropdownBtn = styled.button`
+    border-radius: 50px;
+    background-color: transparent;
+    border: none;
+    // ${Dropdown}:hover &{background-color: #f1f1f1;}
+    cursor:pointer;
+`
+
+const DropdownContent = styled.div`
+    display: none;
+    position: absolute;
+    background-color: #f7f7f7;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    ${Dropdown}:hover &{display: block;}
+`
+
+const DropdownLink = styled.div`
+    color: black;
+    padding: 12px 8px;
+    text-decoration: none;
+    &:hover {background-color: #f1f1f1;}
+`
+
 const Navbar = () => {
     const cart = useSelector(state => state.cart);
     const user = useSelector(state => state.user);
@@ -91,7 +122,7 @@ const Navbar = () => {
 
     useEffect((() => {
         if (user.currentUser) {
-            console.log("%%%***!!!!!!!!", user.currentUser);
+            // console.log("%%%***!!!!!!!!", user.currentUser);
             getUserCart(dispatch, user.currentUser);
             // console.log(total);
         }
@@ -139,7 +170,7 @@ const Navbar = () => {
                     {
                         user.currentUser
                             ? <>
-                                <MenuItem onClick={handleLogOut}>LOG OUT</MenuItem>
+
                                 {/* <Link to="/cart">
                                     <MenuItem>
                                         <Badge badgeContent={2} color="primary" overlap="rectangular">
@@ -147,6 +178,20 @@ const Navbar = () => {
                                         </Badge>
                                     </MenuItem>
                                 </Link> */}
+                                <MenuItem>
+                                    <Dropdown>
+                                        <DropdownBtn>
+                                            <AccountCircleOutlinedIcon />
+                                        </DropdownBtn>
+                                        <DropdownContent>
+                                            <Link to="/orders" style={{ "textDecoration": "none" }}>
+                                                <DropdownLink>Orders</DropdownLink>
+                                            </Link>
+                                            <DropdownLink>My Account</DropdownLink>
+                                            <DropdownLink onClick={handleLogOut}>Logout</DropdownLink>
+                                        </DropdownContent>
+                                    </Dropdown>
+                                </MenuItem>
                                 <Link to="/cart">
                                     <MenuItem>
                                         <Badge badgeContent={quantity} color="primary" overlap="rectangular">
