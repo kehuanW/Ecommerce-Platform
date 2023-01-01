@@ -20,7 +20,23 @@ const OrderSchema = new Schema(
                 quantity: {
                     type: Number,
                     default: 1,
-                }
+                },
+                price: {
+                    type: Number,
+                    default: 0,
+                },
+                img: {
+                    type: String,
+                    default: "",
+                },
+                title: {
+                    type: String,
+                    default: "",
+                },
+                desc: {
+                    type: String,
+                    default: "",
+                },
             }
         ],
         quantity: { type: Number, required: true },

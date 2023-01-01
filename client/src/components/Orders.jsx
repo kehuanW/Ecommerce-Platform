@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
-import { userRequestNew } from '../requestMethods'
+import { userRequestNew, publicRequest } from '../requestMethods'
 import PurchasedItem from './PurchasedItem'
 
 const Container = styled.div`
@@ -17,49 +15,53 @@ const Container = styled.div`
     margin: 8px
 `
 
+const EmptyOrder = styled.p`
+    text-align: center;
+    padding: 50px
+`
+
+const Title = styled.h1``
+
 const Orders = (props) => {
     // const [fold, setFold] = useState("none");
     const user = useSelector(state => state.user);
     const navigate = useNavigate();
     const { addToast } = useToasts();
-    const [savedOrders, setSavedOrders] = useState([]);
+    const [items, setItems] = useState([]);
 
     useEffect(async () => {
-        async function fetchData() {
-            if (user.currentUser) {
-                const res = await userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, user.currentUser)
-                    .get(`/orders/find/${user.currentUser._id}`);
-                setSavedOrders(res.data);
-            } else {
-                navigate('/');
-                addToast("Please log in first.", {
-                    appearance: 'warning',
-                    autoDismiss: true,
-                });
+        if (user.currentUser) {
+            const res = await userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, user.currentUser)
+                .get(`/orders/find/${user.currentUser._id}`);
+            let savedOrders = res.data;
+            let items = [];
+            for (let orderInd = 0; orderInd < savedOrders.length; orderInd++) {
+                let { address, status, createdAt, _id } = savedOrders[orderInd];
+                for (let prodInd = 0; prodInd < savedOrders[orderInd].products.length; prodInd++) {
+                    console.log(savedOrders)
+                    // const productInfoFromDBRes = await publicRequest.get(`/products/find/${savedOrders[orderInd].products[prodInd]._id}`);
+                    // console.log("%%%%%%%%%%%%%", productInfoFromDBRes);
+                    // const { price, img } = productInfoFromDBRes.data;
+                    items.push({ ...savedOrders[orderInd].products[prodInd], address, status, createdAt, _id })
+                    // items.push({ ...savedOrders[orderInd].products[prodInd], address, status, createdAt, _id, price, img })
+                }
             }
+            setItems(items);
+        } else {
+            navigate('/');
+            addToast("Please log in first.", {
+                appearance: 'warning',
+                autoDismiss: true,
+            });
         }
-        fetchData();
-    })
-
-    //这里成为orders了！从这里开始改
-    let items = [];
-    for (let orderInd = 0; orderInd < savedOrders.length; orderInd++) {
-        let { address, status, createdAt, _id } = savedOrders[orderInd];
-        for (let prodInd = 0; prodInd < savedOrders[orderInd].products.length; prodInd++) {
-            items.push({ ...savedOrders[orderInd].products[prodInd], address, status, createdAt, _id })
-        }
-    }
-    // let items = []
-    // for (let i = 0; i < products.length; i++) {
-    //     items.push({ ...products[i], quantity, address, status, createdAt, _id })
-    // }
-    // let items = products.map((item) => ({ ...item, quantity, address, status, createdAt, _id }));
-    console.log("++++++++++++++++", items)
-    // const saveOrder = props.savedOrder;
+    }, [user])
 
     return (
         <Container>
-            {items.map((item) => <PurchasedItem item={item} />)}
+            <Title>My Orders</Title>
+            {items.length !== 0
+                ? items.map((item) => <PurchasedItem item={item} />)
+                : <EmptyOrder>You haven't placed an order yet~</EmptyOrder>}
         </Container>
     )
 }

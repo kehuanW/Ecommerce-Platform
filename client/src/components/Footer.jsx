@@ -107,7 +107,7 @@ const Footer = () => {
                     <ListItem href='/products?category=men'>Man Fashion</ListItem>
                     <ListItem href='/products?category=women'>Woman Fashion</ListItem>
                     <ListItem>My Account</ListItem>
-                    <ListItem>Order Tracking</ListItem>
+                    <ListItem href='/orders'>Order Tracking</ListItem>
                     <ListItem>Wishlist</ListItem>
                     <ListItem>Terms</ListItem>
                 </List>

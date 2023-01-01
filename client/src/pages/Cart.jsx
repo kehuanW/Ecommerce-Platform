@@ -194,6 +194,17 @@ const Cart = () => {
     // console.log("$$$$$$$$$$", cart);
     const { addToast } = useToasts();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user.currentUser) {
+            addToast("Please login first", {
+                appearance: 'warning',
+                autoDismiss: true,
+            })
+            navigate("/login")
+        }
+    }, [user.currentUser])
 
     const handleWishList = () => {
         const info = "Thank you for your like. This feature is still under development."

@@ -41,7 +41,7 @@ router.post('/payment',
                 quantity: item.amount,
             };
         });
-        // console.log("myline_items", line_items[0].price_data.product_data);
+        console.log("myline_items", line_items[0].price_data.product_data);
 
         const session = await stripe.checkout.sessions.create({
             shipping_address_collection: { allowed_countries: ['AU', 'US'] },
@@ -102,28 +102,31 @@ router.post('/webhook',
                 expand: ['data.price.product'],
             });
 
-            // console.log("*******", line_items.data.price.product);
+            // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            // console.log("*******line_items.data", line_items.data);
+            // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            // console.log("########line_items.data[0].price", line_items.data[0].price);
+            // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            // console.log("*******line_items.data[0].price.product", line_items.data[0].price.product);
 
-            const purchaseItems = line_items.data.map(async (i) => {
-                let itemMetaDataObject = i.price.product.metadata;
+            const purchaseItems = line_items.data.map((i) => {
+                let itemMetaDataObject = {
+                    ...i.price.product.metadata,
+                    "img": i.price.product.images[0],
+                    "title": i.price.product.name,
+                    "desc": i.price.product.description,
+                    "price": i.price.unit_amount / 100,
+                };
                 itemMetaDataObject.quantity = i.quantity;
                 return itemMetaDataObject;
             });
-            // purchaseItems [
-            //     {
-            //       id: '6391c0dc745437030d0be281',
-            //       color: 'yellow',
-            //       size: 'M',
-            //       quantity: 2
-            //     },
-            //     { id: '6391c2e0745437030d0be287', color: 'green', quantity: 1 }
-            //   ]
+            // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
             // console.log("purchaseItems", purchaseItems);
 
             const session = await stripe.checkout.sessions.retrieve(event.data.object.id);
             const purchaseAddress = session.customer_details.address;
             // console.log("address", address);
-            console.log("((((", session)
+            // console.log("((((", session)
 
             try {
                 creatOrder(purchaseCustomer, purchaseItems, purchaseAddress);

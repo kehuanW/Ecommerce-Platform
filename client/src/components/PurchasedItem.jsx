@@ -38,25 +38,33 @@ const Right = styled.div`
     flex:4;
     display:flex;
     flex-direction: column;
-    justify-content: space-between;
+    // justify-content: space-between;
+    padding-left: 8px;
 `;
 
-const ProductImage = styled.div``;
+const ProductImage = styled.img`
+    max-width: 100%;
+`;
 
 const OrderStatus = styled.div``;
 
 const ProductSpec = styled.div`
     display: flex;
+    flex-direction:column;
+    margin-bottom: 5px;
 `;
 
 const ProductPay = styled.div`
     display: flex;
+    flex-direction:column;
+    margin-bottom: 5px;
 `;
 
 const ProductTotal = styled.div``;
 
 const ProductDetail = styled.div`
-    margin-right:20px
+    margin-right:20px;
+    margin-bottom: 5px;
 `;
 
 const OrderInfo = styled.div`
@@ -100,10 +108,9 @@ const PurchasedItem = (props) => {
                 <ProductionInfo>
                     <Body>
                         <Left>
-                            <ProductImage>Image</ProductImage>
+                            <ProductImage src={item.img} alt="Product Image" />
                         </Left>
                         <Right>
-
                             <ProductDetail>ProductId: {item._id}</ProductDetail>
                             <ProductSpec>
                                 <ProductDetail>Color: {item.color}</ProductDetail>
@@ -111,7 +118,7 @@ const PurchasedItem = (props) => {
                             </ProductSpec>
                             <ProductPay>
                                 <ProductDetail>Amount: {item.quantity}</ProductDetail>
-                                <ProductTotal>Total: $10</ProductTotal>
+                                <ProductTotal>Total: ${item.quantity * item.price}</ProductTotal>
                             </ProductPay>
                         </Right>
                     </Body>
@@ -123,13 +130,15 @@ const PurchasedItem = (props) => {
                 <OrderInfo fold={fold}>
                     <OrderStatus>Status: {item.status}</OrderStatus>
                     <TextInfo>Order Id: {item._id}</TextInfo>
-                    <TextInfo>Created At</TextInfo>
+                    <TextInfo>Created At: {item.createdAt}</TextInfo>
                     <Address>
                         <AddressInfoTitle>ADDRESS</AddressInfoTitle>
+                        <AddressInfo>Details: {item.address.line1}</AddressInfo>
+                        <AddressInfo>         {item.address.line2}</AddressInfo>
                         <AddressInfo>City: {item.address.city}</AddressInfo>
                         <AddressInfo>State: {item.address.state}</AddressInfo>
                         <AddressInfo>Country: {item.address.country}</AddressInfo>
-                        <AddressInfo>Postcode: {item.address.postcode}</AddressInfo>
+                        <AddressInfo>Postcode: {item.address.postal_code}</AddressInfo>
                     </Address>
                     <CollapseBtn onClick={() => setFold("none")}>
                         <ExpandLessOutlinedIcon />
