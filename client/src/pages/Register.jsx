@@ -70,6 +70,7 @@ const Register = () => {
     const { addToast } = useToasts();
 
     const [newUser, setNewUser] = useState({
+        nickname: "",
         username: "",
         email: "",
         password: "",
@@ -119,18 +120,19 @@ const Register = () => {
         <Container>
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
-                <Form>
-                    <Input placeholder="Username" onChange={e => setNewUser({ ...newUser, username: e.target.value })} />
-                    <Input placeholder="Email" type="email" onChange={e => setNewUser({ ...newUser, email: e.target.value })} />
-                    <Input placeholder="Password" type="password" onChange={e => setNewUser({ ...newUser, password: e.target.value })} />
+                <Form onSubmit={handleCreate}>
+                    <Input placeholder="Nickname" type="text" onChange={e => setNewUser({ ...newUser, nickname: e.target.value })} required />
+                    <Input placeholder="Email" type="email" onChange={e => setNewUser({ ...newUser, email: e.target.value })} required />
+                    <Input placeholder="Username" onChange={e => setNewUser({ ...newUser, username: e.target.value })} required />
+                    <Input placeholder="Password" type="password" onChange={e => setNewUser({ ...newUser, password: e.target.value })} required />
                     <Agreement>
                         By creating an account, I consent to the processing of my personal data in accordance with the <b>PRIVACY POLICY</b>
                     </Agreement>
                     {/* <Input type="submit" value="Send Request" /> */}
-                    <Button onClick={handleCreate}>CREATE</Button>
+                    <Button type="submit" >CREATE</Button>
                 </Form>
             </Wrapper>
-        </Container>
+        </Container >
     )
 }
 
