@@ -20,4 +20,4 @@ React + Express + Node.js + MongoDB
 - Product filters Based on category/color
 - Sort products by price
 - Checkout with Stripe
-- List user's orders (ongoing)
+- List user's orders
