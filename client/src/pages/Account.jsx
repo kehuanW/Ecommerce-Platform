@@ -17,21 +17,37 @@ const Wapper = styled.div`
 const Left = styled.div``;
 
 const Right = styled.div`
-    padding: 50px
+    padding: 50px;
 `;
 
 const Detail = styled.div`
-display: flex;
-flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `;
 
 const InfoLine = styled.div`
-display: flex;
+    display: flex;
 `;
-const Attribute = styled.div``;
-const UserInfo = styled.div``;
-const Change = styled.div``;
-const Button = styled.div``;
+const Attribute = styled.span`
+    font-size: 1.2rem
+`;
+const UserInfo = styled.input`
+    margin-top: 10px;
+    margin-bottom: 20px;
+    height: 25px;
+    width: 100%;
+    padding: 5px;
+    font-size: 1rem;
+`;
+// const Change = styled.div`
+//     flex:1;
+// `;
+const Button = styled.button`
+    padding:10px;
+    font-size: 1rem;
+    background-color: transparent
+`;
 
 
 
@@ -46,23 +62,28 @@ const Account = () => {
                 </Left>
                 <Right>
                     <Detail>
-                        <InfoLine>
-                            <Attribute>Nickname: </Attribute>
-                            <UserInfo></UserInfo>
-                            <Change>change</Change>
-                        </InfoLine>
-                        <InfoLine>
-                            <Attribute>Email</Attribute>
-                            <UserInfo></UserInfo>
-                            <Change>change</Change>
-                        </InfoLine>
-                        <InfoLine>
-                            <Attribute>Password</Attribute>
-                            <UserInfo></UserInfo>
-                            <Change>change</Change>
-                        </InfoLine>
+                        {/* <InfoLine> */}
+                        <Attribute>Nickname: </Attribute>
+                        <UserInfo></UserInfo>
+                        {/* <Change>change</Change> */}
+                        {/* </InfoLine> */}
+                        {/* <InfoLine> */}
+                        <Attribute>Email</Attribute>
+                        <UserInfo></UserInfo>
+                        {/* <Change>change</Change> */}
+                        {/* </InfoLine> */}
+                        {/* <InfoLine> */}
+                        <Attribute>Username</Attribute>
+                        <UserInfo></UserInfo>
+                        {/* <Change>change</Change> */}
+                        {/* </InfoLine> */}
+                        {/* <InfoLine> */}
+                        <Attribute>Password</Attribute>
+                        <UserInfo></UserInfo>
+                        {/* <Change>change</Change> */}
+                        {/* </InfoLine> */}
+                        <Button>Submit</Button>
                     </Detail>
-                    <Button>Submit</Button>
                 </Right>
 
             </Wapper>
