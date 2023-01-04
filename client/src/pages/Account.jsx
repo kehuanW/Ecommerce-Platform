@@ -5,19 +5,26 @@ import Announcement from '../components/Announcement';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-const Container = styled.div``
+const Container = styled.div`
+    max-width: 100vw;
+`
 
 const Wapper = styled.div`
-    width: 100vw;
-    height: 100vh;
+    // width: 100vw;
+    // height: 100vh;
     display: flex;
-    padding:50px 100px;
+    padding:50px 15%;
+    background-color: rgb(240, 243, 247);
 `;
 
 const Left = styled.div``;
 
 const Right = styled.div`
+    margin-left: 20px;
     padding: 50px;
+    background-color: white;
+    border-radius: 20px;
+    width: 50vw
 `;
 
 const Detail = styled.div`
@@ -36,7 +43,7 @@ const UserInfo = styled.input`
     margin-top: 10px;
     margin-bottom: 20px;
     height: 25px;
-    width: 100%;
+    width: 80%;
     padding: 5px;
     font-size: 1rem;
 `;
@@ -46,7 +53,8 @@ const UserInfo = styled.input`
 const Button = styled.button`
     padding:10px;
     font-size: 1rem;
-    background-color: transparent
+    background-color: transparent;
+    width: 80%;
 `;
 
 
