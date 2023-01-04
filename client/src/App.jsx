@@ -7,7 +7,9 @@ import Login from './pages/Login';
 import Cart from './pages/Cart';
 import Success from './pages/CheckoutSuccess';
 import Failure from './pages/CheckoutFailure';
-import OrderList from './pages/OrderList'
+import OrderList from './pages/OrderList';
+import Account from './pages/Account';
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
           <Route path="/success" element={<Success />}></Route>
           <Route path="/failure" element={<Failure />}></Route>
           <Route path="/orders" element={<OrderList />}></Route>
+          <Route path="/account" element={< Account />}></Route>
+          <Route path="/dashboard" element={< Dashboard />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
