@@ -35,3 +35,21 @@ React + Express + Node.js + MongoDB
 - Sort products by price
 - Checkout with Stripe
 - List user's orders
+
+## Getting Started
+### Prerequisites
+- Node.js v16
+- A web brower 
+- git  
+
+### Installation
+#### Clone or download this repository  
+`git clone https://github.com/kehuanW/AussieCamp.git`
+
+#### Install dependencies
+`npm install`  
+or  
+`yarn install`
+
+#### Start the application  
+`npm start`
