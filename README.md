@@ -1,6 +1,20 @@
-# Ecommerce-Platform
+<br/>
+<p align="center">
+<img src="./logo.png" alt="Logo" width="60" height="60">
+<h1 align="center">Ecommerce Platform</h1>
 
-### Tech Stack and APIs/Packages
+<p align="center">
+    An Awesome Web Application for Online Shoppers to Brower, Search, and Purchase Products!
+    <br/>
+    <br/>
+    <a href=""><strong>Explore the live application »</strong></a>
+    <br/>
+    <br/>
+  </p>
+</p>
+
+## About the project
+### Main tech stack
 React + Express + Node.js + MongoDB
 
 - Redux and Redux-persist
