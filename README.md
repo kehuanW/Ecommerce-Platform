@@ -47,15 +47,15 @@ React + Express + Node.js + MongoDB
 `git clone https://github.com/kehuanW/AussieCamp.git`
 
 #### Install dependencies
-Enter /client and /api respectively to install dependency packages through npm
+Enter /client and /api respectively to install dependency packages through npm.  
 
-From ./
-For client,  `cd client` and then `npm install` 
-For api,  `cd api` and then `npm install` 
+From ./  
+For client,  `cd client` and then `npm install`   
+For api,  `cd api` and then `npm install`   
 
 #### Start the application 
-Enter client and api respectively to start them.
+Enter client and api respectively to start them.  
 
-From ./
-For client,  `cd client` and then `npm start` 
-For api,  `cd api` and then `npm start` 
+From ./  
+For client,  `cd client` and then `npm start`   
+For api,  `cd api` and then `npm start`   
