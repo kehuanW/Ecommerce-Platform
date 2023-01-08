@@ -73,25 +73,45 @@ For api,  `cd api` and then `npm start`
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "axios": "^1.2.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-modal": "^3.16.1",
-    "react-redux": "^8.0.5",
-    "react-router-dom": "^6.4.5",
-    "react-scripts": "4.0.3",
-    "react-toast-notifications": "^2.5.1",
-    "redux-persist": "^6.0.0",
-    "styled-components": "^5.3.6",
-    "web-vitals": "^1.0.1"
+- axios
+    - ^1.2.1
+- react
+    - ^17.0.2
+- react-dom
+    - ^17.0.2
+- react-modal
+    - ^3.16.1
+- react-redux
+    - ^8.0.5
+- react-router-dom
+    - ^6.4.5
+- react-scripts
+    - 4.0.3
+- react-toast-notifications
+    - ^2.5.1
+- redux-persist
+    - ^6.0.0
+- styled-components
+    - ^5.3.6
+- web-vitals
+    - ^1.0.1
 
 
-    "@sendgrid/mail": "^7.7.0",
-    "cors": "^2.8.5",
-    "crypto-js": "^4.1.1",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.8.0",
-    "nodemon": "^2.0.20",
-    "stripe": "^11.3.0"
+- @sendgrid/mail
+    - ^7.7.0
+- cors
+    - ^2.8.5
+- crypto-js
+    - ^4.1.1",
+- dotenv
+    - ^16.0.3
+- express
+    - ^4.18.2
+- jsonwebtoken
+    - ^8.5.1
+- mongoose
+    - ^6.8.0
+- nodemon
+    - ^2.0.20
+- stripe
+    - ^11.3.0
