@@ -61,6 +61,7 @@ For client,  `cd client` and then `npm start`
 For api,  `cd api` and then `npm start`   
 
 ## Main Dependencies
+### Client Side
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@material-ui/core": "^4.12.4",
@@ -96,7 +97,7 @@ For api,  `cd api` and then `npm start`
 - web-vitals
     - ^1.0.1
 
-
+### API Side
 - @sendgrid/mail
     - ^7.7.0
 - cors
