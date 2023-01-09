@@ -62,6 +62,7 @@ const Button = styled.button`
     font-size: 1rem;
     background-color: transparent;
     width: 20%;
+    min-width: 100px;
 `;
 
 
