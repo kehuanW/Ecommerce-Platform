@@ -97,7 +97,7 @@ const DropdownContent = styled.div`
     display: none;
     position: absolute;
     background-color: #f7f7f7;
-    min-width: 100px;
+    // min-width: 100px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     ${Dropdown}:hover &{display: block;}
@@ -105,7 +105,7 @@ const DropdownContent = styled.div`
 
 const DropdownLink = styled.div`
     color: black;
-    padding: 12px 8px;
+    padding: 12px 20px;
     text-decoration: none;
     &:hover {background-color: #f1f1f1;}
 `
@@ -184,10 +184,10 @@ const Navbar = () => {
                                             <AccountCircleOutlinedIcon />
                                         </DropdownBtn>
                                         <DropdownContent>
+                                            <DropdownLink>Home</DropdownLink>
                                             <Link to="/orders" style={{ "textDecoration": "none" }}>
                                                 <DropdownLink>Orders</DropdownLink>
                                             </Link>
-                                            <DropdownLink>My Account</DropdownLink>
                                             <DropdownLink onClick={handleLogOut}>Logout</DropdownLink>
                                         </DropdownContent>
                                     </Dropdown>
