@@ -98,9 +98,6 @@ const Account = () => {
     const [originalPassword, setOriginalPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
 
-    useEffect(() => {
-        console.log(">>>", user);
-    }, [user])
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();

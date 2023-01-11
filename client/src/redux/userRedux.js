@@ -25,7 +25,8 @@ const userSlice = createSlice({
             state.error = false;
         },
         updateProfile: (state, action) => {
-            state.currentUser = action.payload;
+            state.currentUser.nickname = action.payload.nickname;
+            state.currentUser.email = action.payload.email;
             console.log("redux");
         }
     }

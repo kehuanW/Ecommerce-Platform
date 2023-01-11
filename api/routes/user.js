@@ -57,11 +57,11 @@ router.get('/stats', verifyTokenAndAdmin, async (req, res) => {
 })
 
 // UPDATE Profile
-router.put('/profile/:id', async (req, res) => {
+router.put('/profile/:userId', verifyTokenAndAuthorization, async (req, res) => {
     // console.log(req.body);
     try {
         const updatedUserInfo = await User.findByIdAndUpdate(
-            req.params.id,
+            req.params.userId,
             {
                 $set: req.body,
             },
