@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
+
 import UserNavbar from '../components/UserNavbar';
 import Announcement from '../components/Announcement';
 import Navbar from '../components/Navbar';
@@ -89,6 +91,7 @@ const Account = () => {
     const { user } = useSelector(state => state);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { addToast } = useToasts();
 
     const [nickname, setNickname] = useState(user.currentUser.nickname);
     const [email, setEmail] = useState(user.currentUser.email);
@@ -107,8 +110,16 @@ const Account = () => {
                 .put(`/users/profile/${user.currentUser._id}`, { ...user.currentUser, "nickname": nickname, "email": email });
             console.log(res.data)
             dispatch(updateProfile(res.data));
+            addToast("Changed Successfully", {
+                appearance: 'success',
+                autoDismiss: true,
+            });
         } catch (err) {
-            console.log(err)
+            // console.log(err);
+            addToast("Something wrong. Please try again!", {
+                appearance: 'error',
+                autoDismiss: true,
+            })
         }
     }
 
