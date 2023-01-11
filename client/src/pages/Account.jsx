@@ -11,6 +11,8 @@ import Footer from '../components/Footer';
 import { tablet, mobile, laptop } from '../responsive';
 import { userRequestNew } from '../requestMethods'
 import { updateProfile } from '../redux/userRedux';
+import { logOut } from '../redux/userRedux';
+import { clearCartInfo } from '../redux/cartRedux';
 
 const Container = styled.div`
     max-width: 100vw;
@@ -105,7 +107,7 @@ const Account = () => {
         try {
             const res = await userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, user.currentUser)
                 .put(`/users/profile/${user.currentUser._id}`, { ...user.currentUser, "nickname": nickname, "email": email });
-            console.log(res.data)
+            // console.log(res.data)
             dispatch(updateProfile(res.data));
             addToast("Changed Successfully", {
                 appearance: 'success',
@@ -120,9 +122,35 @@ const Account = () => {
         }
     }
 
-    const handleUpdatePassword = async () => {
-        const res = await userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, user.currentUser,)
-            .put(`/user/${user.currentUser._id}`);
+    const handleUpdatePassword = (e) => {
+        e.preventDefault();
+        userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, user.currentUser)
+            .put(`/users/pw/${user.currentUser._id}`, { ...user.currentUser, "originalPassword": originalPassword, "newPassword": newPassword })
+            .then(res => {
+                addToast("Changed successfully! Please login again.", {
+                    appearance: 'success',
+                    autoDismiss: true,
+                });
+                dispatch(logOut());
+                dispatch(clearCartInfo());
+                navigate('/login');
+            })
+            .catch(res => {
+                if (res) {
+                    console.log("$%%%%%", res);
+                    if (res.response.status === 401) {
+                        addToast("Your original password is wrong!", {
+                            appearance: 'error',
+                            autoDismiss: true,
+                        });
+                    } else {
+                        addToast("Something wrong. Please try again!", {
+                            appearance: 'error',
+                            autoDismiss: true,
+                        });
+                    }
+                }
+            });
     }
 
     return (
@@ -139,12 +167,12 @@ const Account = () => {
                             <DetailTitle>Update Profile</DetailTitle>
                             <InfoLine>
                                 <Attribute>Nickname</Attribute>
-                                <UserInfo defaultValue={nickname} onChange={e => { setNickname(e.target.value); console.log(nickname) }} />
+                                <UserInfo defaultValue={nickname} onChange={e => { setNickname(e.target.value); console.log(nickname) }} required />
                                 {/* <Change>change</Change> */}
                             </InfoLine>
                             <InfoLine>
                                 <Attribute>Email</Attribute>
-                                <UserInfo defaultValue={email} type="email" onChange={e => setEmail(e.target.value)} />
+                                <UserInfo defaultValue={email} type="email" onChange={e => setEmail(e.target.value)} required />
                                 {/* <Change>change</Change> */}
                             </InfoLine>
                             {/* <InfoLine> */}
@@ -161,12 +189,12 @@ const Account = () => {
                             <DetailTitle>Update Password</DetailTitle>
                             <InfoLine>
                                 <Attribute >Orginal Password</Attribute>
-                                <UserInfo value={originalPassword} type="password" />
+                                <UserInfo type="password" onChange={e => setOriginalPassword(e.target.value)} required />
                                 {/* <Change>change</Change> */}
                             </InfoLine>
                             <InfoLine>
                                 <Attribute >New Password</Attribute>
-                                <UserInfo value={newPassword} type="password" />
+                                <UserInfo type="password" onChange={e => setNewPassword(e.target.value)} required />
                                 {/* <Change>change</Change> */}
                             </InfoLine>
                             <Button onClick={handleUpdatePassword}>Submit</Button>

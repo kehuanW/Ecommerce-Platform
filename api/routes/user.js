@@ -75,26 +75,64 @@ router.put('/profile/:userId', verifyTokenAndAuthorization, async (req, res) => 
 });
 
 // UPDATE Password
-router.put('/pw/:id', verifyTokenAndAuthorization, async (req, res) => {
-    if (req.body.originalpassword) {
-        req.body.password = CryptoJS.AES.encrypt(
-            req.body.password,
-            process.env.PASSWORD_SEC
-        ).toString();
-    }
+router.put('/pw/:userId', verifyTokenAndAuthorization, async (req, res) => {
+    console.log("##########", req.body);
+
+    const username = req.body.username;
+    const originalPassword = req.body.originalPassword;
+    const newPassword = req.body.newPassword;
 
     try {
-        const updatedUserInfo = await User.findByIdAndUpdate(
-            req.params.id,
-            {
-                $set: req.body,
-            },
-            { new: true }
-        )
-        res.status(200).json(updatedUserInfo);
-    } catch (err) {
+        const dbUserInfo = await User.findOne({ "username": username });
+        // console.log("auth", dbUserInfo._id.toString());
+        // console.log("auth", dbUserInfo.isAdmin);
+
+        if (!dbUserInfo) {
+            res.status(401).json("wrong credentials");
+        } else {
+            const { password } = dbUserInfo._doc;
+            const decrypedPw = CryptoJS.AES.decrypt(password, process.env.PASSWORD_SEC).toString(CryptoJS.enc.Utf8);
+
+            if (decrypedPw !== originalPassword) {
+                // console.log("check pw", decrypedPw !== originalPassword)
+                res.status(401).json("wrong credentials");
+            } else {
+                if (req.body.newPassword) {
+                    req.body.password = CryptoJS.AES.encrypt(
+                        req.body.newPassword,
+                        process.env.PASSWORD_SEC
+                    ).toString();
+                }
+                const updatedUserInfo = await User.findByIdAndUpdate(
+                    req.params.userId,
+                    {
+                        $set: req.body,
+                    },
+                    { new: true }
+                )
+                res.status(201).json("success");
+            }
+        }
+
+    }
+    catch (err) {
         res.status(500).json(err);
     }
+
+
+
+    // try {
+    //     const updatedUserInfo = await User.findByIdAndUpdate(
+    //         req.params.userId,
+    //         {
+    //             $set: req.body,
+    //         },
+    //         { new: true }
+    //     )
+    //     res.status(200).json(updatedUserInfo);
+    // } catch (err) {
+    //     res.status(500).json(err);
+    // }
 });
 
 
