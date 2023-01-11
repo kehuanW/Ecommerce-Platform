@@ -184,7 +184,9 @@ const Navbar = () => {
                                             <AccountCircleOutlinedIcon />
                                         </DropdownBtn>
                                         <DropdownContent>
-                                            <DropdownLink>Home</DropdownLink>
+                                            <Link to="/dashboard" style={{ "textDecoration": "none" }}>
+                                                <DropdownLink>Home</DropdownLink>
+                                            </Link>
                                             <Link to="/orders" style={{ "textDecoration": "none" }}>
                                                 <DropdownLink>Orders</DropdownLink>
                                             </Link>
@@ -208,9 +210,6 @@ const Navbar = () => {
                                     <MenuItem>LOG IN</MenuItem>
                                 </Link>
                             </>
-
-
-
                     }
                 </Right>
             </Wrapper>

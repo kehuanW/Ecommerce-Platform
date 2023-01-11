@@ -23,10 +23,14 @@ const userSlice = createSlice({
             state.currentUser = null;
             state.isFetching = false;
             state.error = false;
+        },
+        updateProfile: (state, action) => {
+            state.currentUser = action.payload;
+            console.log("redux");
         }
     }
 
 },);
 
-export const { loginStart, loginSuccess, loginFailure, logOut } = userSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logOut, updateProfile } = userSlice.actions;
 export default userSlice.reducer;

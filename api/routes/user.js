@@ -56,9 +56,27 @@ router.get('/stats', verifyTokenAndAdmin, async (req, res) => {
     }
 })
 
-// UPDATE
-router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
-    if (req.body.password) {
+// UPDATE Profile
+router.put('/profile/:id', async (req, res) => {
+    // console.log(req.body);
+    try {
+        const updatedUserInfo = await User.findByIdAndUpdate(
+            req.params.id,
+            {
+                $set: req.body,
+            },
+            { new: true }
+        )
+        res.status(200).json(updatedUserInfo);
+        // throw "hello"
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+// UPDATE Password
+router.put('/pw/:id', verifyTokenAndAuthorization, async (req, res) => {
+    if (req.body.originalpassword) {
         req.body.password = CryptoJS.AES.encrypt(
             req.body.password,
             process.env.PASSWORD_SEC

@@ -17,7 +17,7 @@ export const login = async (dispatch, user) => {
 
 export const getUserCart = async (dispatch, currentUser) => {
     try {
-        console.log("$$$$$##@@@@@", currentUser, currentUser._id);
+        // console.log("$$$$$##@@@@@", currentUser, currentUser._id);
         const res = await userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, currentUser)
             .get(`/carts/find/${currentUser._id}`);
         // console.log("apiCalls", res.data);
