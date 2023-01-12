@@ -166,7 +166,8 @@ const ModalCartButton = styled.button`
     font-size: 1.2em;
     width: 200px;
     margin-top: 30px;
-    padding: 10px
+    padding: 10px;
+    cursor: pointer;
 `;
 
 const customStyles = {
@@ -301,9 +302,9 @@ const Product = (props) => {
                                     </ModalFilters>
                                     <AmountContainer>
                                         {/* At onClick you should not call the function, instead set a function reference.  */}
-                                        <Remove onClick={() => handleAmount("dec")} />
+                                        <Remove onClick={() => handleAmount("dec")} style={{ cursor: "pointer" }} />
                                         <Amount>{amount}</Amount>
-                                        <Add onClick={() => handleAmount("inc")} />
+                                        <Add onClick={() => handleAmount("inc")} style={{ cursor: "pointer" }} />
                                     </AmountContainer>
                                     <ModalCartButton onClick={handleClick}>ADD TO CART</ModalCartButton>
                                 </ModalProductDetail>

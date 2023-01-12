@@ -117,7 +117,7 @@ const Account = () => {
         e.preventDefault();
         // console.log({ ...user.currentUser, "nickname": nickname })
         try {
-            const res = await userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, user.currentUser)
+            const res = await userRequestNew(user.currentUser)
                 .put(`/users/profile/${user.currentUser._id}`, { ...user.currentUser, "nickname": nickname, "email": email });
             // console.log(res.data)
             dispatch(updateProfile(res.data));
@@ -136,7 +136,7 @@ const Account = () => {
 
     const handleUpdatePassword = (e) => {
         e.preventDefault();
-        userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, user.currentUser)
+        userRequestNew(user.currentUser)
             .put(`/users/pw/${user.currentUser._id}`, { ...user.currentUser, "originalPassword": originalPassword, "newPassword": newPassword })
             .then(res => {
                 addToast("Changed successfully! Please login again.", {

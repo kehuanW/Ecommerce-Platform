@@ -64,7 +64,7 @@ const Dashboard = () => {
             navigate("/login")
         } else {
             try {
-                const res = await userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, user.currentUser)
+                const res = await userRequestNew(user.currentUser)
                     .get(`/orders/find/${user.currentUser._id}`);
 
                 let items = 0;

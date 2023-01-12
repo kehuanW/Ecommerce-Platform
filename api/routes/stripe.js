@@ -65,7 +65,7 @@ const creatOrder = async (purchaseCustomer, purchaseItems, purchaseAddress) => {
     const newOrder = new Order(order);
     try {
         const savedOrder = await newOrder.save();
-        console.log("Processed Order:", savedOrder);
+        // console.log("Processed Order:", savedOrder);
     } catch (err) {
         console.log("creatOrder error", err);
     }

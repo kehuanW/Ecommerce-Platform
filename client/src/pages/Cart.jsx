@@ -7,10 +7,9 @@ import { Add, Remove } from '@material-ui/icons';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { tablet, mobile } from '../responsive';
 import { useDispatch, useSelector } from 'react-redux';
-import { userRequest } from '../requestMethods';
+import { userRequestNew } from '../requestMethods';
 import { useToasts } from 'react-toast-notifications';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import { increaseAmount, decreaseAmount, removeProduct, calCartTotal } from '../redux/cartRedux';
 import { updateCart } from '../redux/apiCalls';
 
@@ -218,7 +217,9 @@ const Cart = () => {
         // console.log("handleCheckout");
         // console.log(cart);
         try {
-            const res = await userRequest.post("/checkout/payment", { cart, user });
+            // const res = await userRequest.post("/checkout/payment", { cart, user });
+            const res = await userRequestNew(user.currentUser)
+                .post("/checkout/payment", { cart, user });
 
             if (res.data.url) window.location.href = res.data.url;
         }
@@ -284,9 +285,9 @@ const Cart = () => {
                                         </ProductDetail>
                                         <PriceDetail>
                                             <ProductAmountContainer>
-                                                <Add onClick={() => handleIncreaseAmount(ind)} />
+                                                <Add onClick={() => handleIncreaseAmount(ind)} style={{ cursor: "pointer" }} />
                                                 <ProductAmount>{item.amount}</ProductAmount>
-                                                <Remove onClick={() => handleDecreaseAmount(ind)} />
+                                                <Remove onClick={() => handleDecreaseAmount(ind)} style={{ cursor: "pointer" }} />
                                             </ProductAmountContainer>
                                             <ProductPrice>$ {item.price * item.amount}</ProductPrice>
                                         </PriceDetail>

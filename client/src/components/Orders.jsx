@@ -31,7 +31,7 @@ const Orders = (props) => {
 
     useEffect(async () => {
         if (user.currentUser) {
-            const res = await userRequestNew(process.env.REACT_APP_CLIENT_DOMAIN, user.currentUser)
+            const res = await userRequestNew(user.currentUser)
                 .get(`/orders/find/${user.currentUser._id}`);
             let savedOrders = res.data;
             let items = [];

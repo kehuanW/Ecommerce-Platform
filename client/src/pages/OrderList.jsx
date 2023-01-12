@@ -8,8 +8,6 @@ import Navbar from '../components/Navbar'
 import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import Orders from '../components/Orders';
-import { userRequestNew } from '../requestMethods'
-import axios from 'axios';
 
 const Container = styled.div``;
 
