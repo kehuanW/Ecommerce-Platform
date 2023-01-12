@@ -95,8 +95,8 @@ const Account = () => {
     const navigate = useNavigate();
     const { addToast } = useToasts();
 
-    const [nickname, setNickname] = useState(user.currentUser.nickname);
-    const [email, setEmail] = useState(user.currentUser.email);
+    const [nickname, setNickname] = useState(user.currentUser ? user.currentUser.nickname : "");
+    const [email, setEmail] = useState(user.currentUser ? user.currentUser.email : "");
     const [originalPassword, setOriginalPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
 
@@ -136,20 +136,20 @@ const Account = () => {
                 navigate('/login');
             })
             .catch(res => {
-                if (res) {
-                    console.log("$%%%%%", res);
-                    if (res.response.status === 401) {
-                        addToast("Your original password is wrong!", {
-                            appearance: 'error',
-                            autoDismiss: true,
-                        });
-                    } else {
-                        addToast("Something wrong. Please try again!", {
-                            appearance: 'error',
-                            autoDismiss: true,
-                        });
-                    }
+                // if (res) {
+                console.log("$%%%%%", res);
+                if (res.response.status === 401) {
+                    addToast("Your original password is wrong!", {
+                        appearance: 'error',
+                        autoDismiss: true,
+                    });
+                } else {
+                    addToast("Something wrong. Please try again!", {
+                        appearance: 'error',
+                        autoDismiss: true,
+                    });
                 }
+                // }
             });
     }
 
