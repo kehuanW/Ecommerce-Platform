@@ -80,17 +80,17 @@ const Login = () => {
     const dispatch = useDispatch();
     const { isFetching, error } = useSelector(state => state.user);
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            login(dispatch, { username, password });
+            await login(dispatch, { username, password });
             addToast("Login Successfully", {
                 appearance: 'success',
                 autoDismiss: true,
             });
             navigate("/");
         } catch (err) {
-            addToast("Login Failure. Please try again!", {
+            addToast(err, {
                 appearance: 'error',
                 autoDismiss: true,
             })

@@ -11,7 +11,8 @@ export const login = async (dispatch, user) => {
         dispatch(loginSuccess(res.data));
     } catch (err) {
         dispatch(loginFailure());
-        console.log("Login Failure", err);
+        throw "Login Failure. Please try again";
+        // console.log("Login Failure", err);
     }
 }
 
