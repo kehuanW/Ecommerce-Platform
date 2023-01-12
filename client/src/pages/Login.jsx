@@ -117,6 +117,9 @@ const Login = () => {
                     <Link to="/register">
                         <Text>CREATE A NEW ACCOUNT</Text>
                     </Link>
+                    <Link to="/">
+                        <Text>BROWER FIRST</Text>
+                    </Link>
                 </Form>
             </Wrapper>
         </Container>

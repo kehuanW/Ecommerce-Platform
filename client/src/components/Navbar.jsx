@@ -61,6 +61,7 @@ const Center = styled.div`
 
 const Logo = styled.h1`
     font-weight: bold;
+    color: black;
     ${tablet({ fontSize: "24px", margin: "auto" })};
     ${mobile({ marginLeft: "10px", marginTop: "5px" })};
 `
@@ -74,6 +75,7 @@ const Right = styled.div`
 `
 
 const MenuItem = styled.div`
+    color: black;
     font-size: 14px;
     cursor: pointer;
     margin-left: 25px;

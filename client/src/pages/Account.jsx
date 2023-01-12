@@ -87,6 +87,9 @@ const Button = styled.button`
     &:active {background-color: rgb(218, 220, 224)}
 `;
 
+const MyLink = styled.p`
+    margin-left: 20px;
+`;
 
 
 const Account = () => {
@@ -100,6 +103,15 @@ const Account = () => {
     const [originalPassword, setOriginalPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
 
+    useEffect(() => {
+        if (!user.currentUser) {
+            addToast("Please login first", {
+                appearance: 'warning',
+                autoDismiss: true,
+            })
+            navigate("/login")
+        }
+    }, [user.currentUser])
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
@@ -163,42 +175,55 @@ const Account = () => {
                 </Left>
                 <Right>
                     <Detail>
-                        <Form>
-                            <DetailTitle>Update Profile</DetailTitle>
-                            <InfoLine>
-                                <Attribute>Nickname</Attribute>
-                                <UserInfo defaultValue={nickname} onChange={e => { setNickname(e.target.value); console.log(nickname) }} required />
-                                {/* <Change>change</Change> */}
-                            </InfoLine>
-                            <InfoLine>
-                                <Attribute>Email</Attribute>
-                                <UserInfo defaultValue={email} type="email" onChange={e => setEmail(e.target.value)} required />
-                                {/* <Change>change</Change> */}
-                            </InfoLine>
-                            {/* <InfoLine> */}
-                            {/* <Attribute>Username</Attribute> */}
-                            {/* <UserInfo value={user.currentUser.username} disabled /> */}
-                            {/* <Change>change</Change> */}
-                            {/* </InfoLine> */}
-                            <Button onClick={handleUpdateProfile}>Submit</Button>
-                        </Form>
+                        {user.currentUser ?
+                            <div>
+                                <Form>
+                                    <DetailTitle>Update Profile</DetailTitle>
+                                    <InfoLine>
+                                        <Attribute>Nickname</Attribute>
+                                        <UserInfo defaultValue={nickname} onChange={e => { setNickname(e.target.value); console.log(nickname) }} required />
+                                        {/* <Change>change</Change> */}
+                                    </InfoLine>
+                                    <InfoLine>
+                                        <Attribute>Email</Attribute>
+                                        <UserInfo defaultValue={email} type="email" onChange={e => setEmail(e.target.value)} required />
+                                        {/* <Change>change</Change> */}
+                                    </InfoLine>
+                                    {/* <InfoLine> */}
+                                    {/* <Attribute>Username</Attribute> */}
+                                    {/* <UserInfo value={user.currentUser.username} disabled /> */}
+                                    {/* <Change>change</Change> */}
+                                    {/* </InfoLine> */}
+                                    <Button onClick={handleUpdateProfile}>Submit</Button>
+                                </Form>
 
-                        <Hr />
+                                <Hr />
 
-                        <Form>
-                            <DetailTitle>Update Password</DetailTitle>
-                            <InfoLine>
-                                <Attribute >Orginal Password</Attribute>
-                                <UserInfo type="password" onChange={e => setOriginalPassword(e.target.value)} required />
-                                {/* <Change>change</Change> */}
-                            </InfoLine>
-                            <InfoLine>
-                                <Attribute >New Password</Attribute>
-                                <UserInfo type="password" onChange={e => setNewPassword(e.target.value)} required />
-                                {/* <Change>change</Change> */}
-                            </InfoLine>
-                            <Button onClick={handleUpdatePassword}>Submit</Button>
-                        </Form>
+                                <Form>
+                                    <DetailTitle>Update Password</DetailTitle>
+                                    <InfoLine>
+                                        <Attribute >Orginal Password</Attribute>
+                                        <UserInfo type="password" onChange={e => setOriginalPassword(e.target.value)} required />
+                                        {/* <Change>change</Change> */}
+                                    </InfoLine>
+                                    <InfoLine>
+                                        <Attribute >New Password</Attribute>
+                                        <UserInfo type="password" onChange={e => setNewPassword(e.target.value)} required />
+                                        {/* <Change>change</Change> */}
+                                    </InfoLine>
+                                    <Button onClick={handleUpdatePassword}>Submit</Button>
+                                </Form>
+                            </div>
+                            :
+                            <div>
+                                <DetailTitle>Join TODAY today!</DetailTitle>
+                                <Link to="/register">
+                                    <MyLink>Register</MyLink>
+                                </Link>
+                                <Link to="/login">
+                                    <MyLink>Login</MyLink>
+                                </Link>
+                            </div>}
                     </Detail>
                 </Right>
 

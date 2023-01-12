@@ -80,7 +80,6 @@ router.put('/pw/:userId', verifyTokenAndAuthorization, async (req, res) => {
 
     const username = req.body.username;
     const originalPassword = req.body.originalPassword;
-    const newPassword = req.body.newPassword;
 
     try {
         const dbUserInfo = await User.findOne({ "username": username });

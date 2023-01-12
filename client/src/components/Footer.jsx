@@ -58,6 +58,7 @@ const List = styled.ul`
 
 const ListItem = styled.a`
     width: 50%;
+    color: black;
     margin-bottom: 10px;
 `
 
@@ -106,7 +107,7 @@ const Footer = () => {
                     <ListItem href='/cart'>My Cart</ListItem>
                     <ListItem href='/products?category=men'>Man Fashion</ListItem>
                     <ListItem href='/products?category=women'>Woman Fashion</ListItem>
-                    <ListItem>My Account</ListItem>
+                    <ListItem href='/dashboard'>My Account</ListItem>
                     <ListItem href='/orders'>Order Tracking</ListItem>
                     <ListItem>Wishlist</ListItem>
                     <ListItem>Terms</ListItem>
