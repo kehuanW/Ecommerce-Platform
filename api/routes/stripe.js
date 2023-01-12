@@ -41,7 +41,7 @@ router.post('/payment',
                 quantity: item.amount,
             };
         });
-        console.log("myline_items", line_items[0].price_data.product_data);
+        // console.log("myline_items", line_items[0].price_data.product_data);
 
         const session = await stripe.checkout.sessions.create({
             shipping_address_collection: { allowed_countries: ['AU', 'US'] },

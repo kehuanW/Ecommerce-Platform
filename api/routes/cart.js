@@ -36,7 +36,7 @@ router.put('/:userId/:cartId', verifyTokenAndAuthorization, async (req, res) => 
         )
         res.status(200).json(updatedCart);
     } catch (err) {
-        console.log("UPDAT500", err)
+        // console.log("UPDAT500", err)
         res.status(500).json(err);
     }
 });

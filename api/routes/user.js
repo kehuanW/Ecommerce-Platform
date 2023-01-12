@@ -76,7 +76,7 @@ router.put('/profile/:userId', verifyTokenAndAuthorization, async (req, res) => 
 
 // UPDATE Password
 router.put('/pw/:userId', verifyTokenAndAuthorization, async (req, res) => {
-    console.log("##########", req.body);
+    // console.log("##########", req.body);
 
     const username = req.body.username;
     const originalPassword = req.body.originalPassword;

@@ -36,7 +36,7 @@ router.post('/sendsgmail', verifyToken, async (req, res) => {
 
 //ADD TO DB EMAIL LIST
 router.post('/', verifyToken, async (req, res) => {
-    console.log("******", req);
+    // console.log("******", req);
     const userId = req.body.userId;
     const email = req.body.email;
     const date = req.body.date;
