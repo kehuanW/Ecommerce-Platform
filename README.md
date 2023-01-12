@@ -1,6 +1,6 @@
-8<br/>
+<br/>
 <p align="center">
-<img src="./logo.png" alt="Logo" width="60" height="60">
+<img src="./client/public/favicon.png" alt="Logo" width="60" height="60">
 <h1 align="center">Ecommerce Platform</h1>
 
 <p align="center">
