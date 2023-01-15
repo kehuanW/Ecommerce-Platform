@@ -20,15 +20,16 @@ const Products = (props) => {
     // console.log("products", products);
     // console.log("filteredProducts", filteredProducts);
 
+    const REACT_APP_CLIENT_DOMAIN = process.env.REACT_APP_CLIENT_DOMAIN
     useEffect(async () => {
         // console.log("category useEffect");
         let apiUrl;
         if (category) {
-            apiUrl = `http://localhost:5000/api/products?category=${category}`;
+            apiUrl = `${REACT_APP_CLIENT_DOMAIN}products?category=${category}`;
         } else if (searchContent) {
-            apiUrl = `http://localhost:5000/api/products?search=${searchContent}`;
+            apiUrl = `${REACT_APP_CLIENT_DOMAIN}products?search=${searchContent}`;
         } else {
-            apiUrl = `http://localhost:5000/api/products`;
+            apiUrl = `${REACT_APP_CLIENT_DOMAIN}products`;
         }
         try {
             const dbProducts = await axios.get(apiUrl);
