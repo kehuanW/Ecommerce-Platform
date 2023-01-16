@@ -15,6 +15,7 @@ const subscriptioRoute = require("./routes/subscription");
 
 dotenv.config();
 
+mongoose.set('strictQuery', true);
 mongoose.connect(process.env.MONGO_URL)
     .then(() => console.log("DB connection successful"))
     .catch((error) => console.log(error));
@@ -44,8 +45,8 @@ const _dirname = path.dirname("")
 const buildPath = path.join(_dirname, "../client/build");
 
 app.use(express.static(buildPath))
-console.log(buildPath)
-console.log(_dirname)
+// console.log(buildPath)
+// console.log(_dirname)
 
 
 app.get("/*", function (req, res) {
