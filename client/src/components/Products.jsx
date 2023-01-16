@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { BASE_URL } from '../requestMethods'
 // import { popularProducts } from '../data';
 import Product from './Product';
 
@@ -20,16 +21,15 @@ const Products = (props) => {
     // console.log("products", products);
     // console.log("filteredProducts", filteredProducts);
 
-    const REACT_APP_API_DOMAIN = process.env.REACT_APP_API_DOMAIN
     useEffect(async () => {
         // console.log("category useEffect");
         let apiUrl;
         if (category) {
-            apiUrl = `${REACT_APP_API_DOMAIN}products?category=${category}`;
+            apiUrl = `${BASE_URL}products?category=${category}`;
         } else if (searchContent) {
-            apiUrl = `${REACT_APP_API_DOMAIN}products?search=${searchContent}`;
+            apiUrl = `${BASE_URL}products?search=${searchContent}`;
         } else {
-            apiUrl = `${REACT_APP_API_DOMAIN}products`;
+            apiUrl = `${BASE_URL}products`;
         }
         try {
             const dbProducts = await axios.get(apiUrl);
