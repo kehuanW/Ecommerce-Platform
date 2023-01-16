@@ -32,7 +32,6 @@ const UserNavbar = () => {
         <Navbar>
             <Link to='/dashboard'
                 style={{ "textDecoration": "none" }}
-                activeStyle={{ "text-decoration": "underline" }}
             >
                 <Text>Dashboard</Text>
             </Link>

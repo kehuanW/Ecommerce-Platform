@@ -56,7 +56,6 @@ const Image = styled.img`
     z-index:2;
 `
 
-
 const Icon = styled.div`
     margin:10px;
     padding: 10px;
@@ -73,8 +72,26 @@ const Icon = styled.div`
         transform: scale(1.1);
     }
 `
-
 const ModalContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: relative;
+`;
+
+const ModalIcon = styled.div`
+    position: absolute; 
+    right: 0;
+    top: 0;
+    background-color:rgb(242, 242, 242);
+    border-radius: 50%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index:100; // without it the button will be unclickable
+`;
+
+const ModalWapper = styled.div`
     height: 100%,
     width: 100%;
     display: flex;
@@ -103,12 +120,12 @@ const Right = styled.div`
     position: relative;
 `;
 
-const ModalIcon = styled.div`
-    position: absolute; 
-    right: 0;
-    top: 0;
-    cursor: pointer;
-`;
+// const ModalIcon = styled.div`
+//     position: absolute; 
+//     right: 0;
+//     top: 0;
+//     cursor: pointer;
+// `;
 
 const ModalProductDetail = styled.div`
     display: flex;
@@ -279,38 +296,43 @@ const Product = (props) => {
                         contentLabel="Example Modal"
                     >
                         <ModalContainer>
-                            <Left>
-                                <ModalImage src={props.item.img} />
-                            </Left>
-                            <Right>
-                                <ModalIcon>
-                                    <CloseOutlinedIcon onClick={closeModal} />
-                                </ModalIcon>
-                                <ModalProductDetail>
-                                    <ModalTitle>{props.item.title[0].toUpperCase() + props.item.title.slice(1)}</ModalTitle>
-                                    <ModalDesc>{props.item.desc}</ModalDesc>
-                                    <ModalPrice>$ {props.item.price}</ModalPrice>
-                                    <ModalFilters>
-                                        <ModalFilterTitle>Color: </ModalFilterTitle>
-                                        <ModalSelect onChange={(e) => { setColor(e.target.value) }}>
-                                            <ModalOption value="">Choose</ModalOption>
-                                            {props.item.color.map(c => <ModalOption key={c} value={c}>{c[0].toUpperCase() + c.slice(1)}</ModalOption>)}
-                                        </ModalSelect>
-                                        <ModalFilterTitle>Size: </ModalFilterTitle>
-                                        <ModalSelect onChange={(e) => { setSize(e.target.value) }}>
-                                            <ModalOption value="">Choose</ModalOption>
-                                            {props.item.size.map(s => <ModalOption key={s} value={s}>{s.toUpperCase()}</ModalOption>)}
-                                        </ModalSelect>
-                                    </ModalFilters>
-                                    <AmountContainer>
-                                        {/* At onClick you should not call the function, instead set a function reference.  */}
-                                        <Remove onClick={() => handleAmount("dec")} style={{ cursor: "pointer" }} />
-                                        <Amount>{amount}</Amount>
-                                        <Add onClick={() => handleAmount("inc")} style={{ cursor: "pointer" }} />
-                                    </AmountContainer>
-                                    <ModalCartButton onClick={handleClick}>ADD TO CART</ModalCartButton>
-                                </ModalProductDetail>
-                            </Right>
+                            <ModalIcon>
+                                <CloseOutlinedIcon onClick={closeModal} />
+                            </ModalIcon>
+                            <ModalWapper>
+                                <Left>
+                                    <ModalImage src={props.item.img} />
+                                </Left>
+                                <Right>
+                                    {/* <ModalIcon>
+                                        <CloseOutlinedIcon onClick={closeModal} />
+                                    </ModalIcon> */}
+                                    <ModalProductDetail>
+                                        <ModalTitle>{props.item.title[0].toUpperCase() + props.item.title.slice(1)}</ModalTitle>
+                                        <ModalDesc>{props.item.desc}</ModalDesc>
+                                        <ModalPrice>$ {props.item.price}</ModalPrice>
+                                        <ModalFilters>
+                                            <ModalFilterTitle>Color: </ModalFilterTitle>
+                                            <ModalSelect onChange={(e) => { setColor(e.target.value) }}>
+                                                <ModalOption value="">Choose</ModalOption>
+                                                {props.item.color.map(c => <ModalOption key={c} value={c}>{c[0].toUpperCase() + c.slice(1)}</ModalOption>)}
+                                            </ModalSelect>
+                                            <ModalFilterTitle>Size: </ModalFilterTitle>
+                                            <ModalSelect onChange={(e) => { setSize(e.target.value) }}>
+                                                <ModalOption value="">Choose</ModalOption>
+                                                {props.item.size.map(s => <ModalOption key={s} value={s}>{s.toUpperCase()}</ModalOption>)}
+                                            </ModalSelect>
+                                        </ModalFilters>
+                                        <AmountContainer>
+                                            {/* At onClick you should not call the function, instead set a function reference.  */}
+                                            <Remove onClick={() => handleAmount("dec")} style={{ cursor: "pointer" }} />
+                                            <Amount>{amount}</Amount>
+                                            <Add onClick={() => handleAmount("inc")} style={{ cursor: "pointer" }} />
+                                        </AmountContainer>
+                                        <ModalCartButton onClick={handleClick}>ADD TO CART</ModalCartButton>
+                                    </ModalProductDetail>
+                                </Right>
+                            </ModalWapper>
                         </ModalContainer>
                         {/* <div>I am a modal</div> */}
                     </Modal>
