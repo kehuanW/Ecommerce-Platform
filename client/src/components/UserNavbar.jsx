@@ -14,7 +14,7 @@ const Navbar = styled.div`
     align-items: center;
     border-radius: 20px;
     // border-right: 2px solid rgb(240, 243, 247);
-    ${laptop({ flexDirection: "row", marginBottom: "10px" })};  
+    ${laptop({ flexDirection: "row", marginBottom: "10px", width: "225px" })};  
 `;
 
 const Text = styled.div`

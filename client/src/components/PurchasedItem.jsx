@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import { useState } from 'react';
+import { tablet } from '../responsive'
 
 const Container = styled.div`
     display:flex;
     align-items: center;
     justify-content: center;
-    margin: 8px
+    margin: 8px;
 `
 
 const Wapper = styled.div`
@@ -18,6 +19,7 @@ const Wapper = styled.div`
     backgroud-color: yellow;
     padding: 8px;
     border-width: thin;
+    ${tablet({ width: "90vw" })};
 `;
 
 const ProductionInfo = styled.div`
@@ -27,11 +29,13 @@ const ProductionInfo = styled.div`
 
 const Body = styled.div`
     display:flex;
+    ${tablet({ flexDirection: "column" })};
 `;
 
 const Left = styled.div`
     flex:1;
-    display:
+    ${tablet({ maxWidth: "300px", })}
+    // display:
 `;
 
 const Right = styled.div`

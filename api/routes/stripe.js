@@ -72,7 +72,7 @@ const creatOrder = async (purchaseCustomer, purchaseItems, purchaseAddress) => {
 }
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
-const endpointSecret = "whsec_e6c2a9bad6da12aa795f4bf08d900bad6f603a9d1f5dcb55167f16ece609bde6";
+const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 
 router.post('/webhook',
     express.raw({ type: 'application/json' }),

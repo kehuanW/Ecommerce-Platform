@@ -9,6 +9,7 @@ import Modal from 'react-modal';
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { createCart, updateCart } from '../redux/apiCalls';
+import { tablet } from '../responsive'
 
 const Info = styled.div`
     opacity:0;
@@ -79,6 +80,7 @@ const ModalContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content:center;
+    ${tablet({ flexDirection: "column" })};
 `;
 
 const Left = styled.div`
