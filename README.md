@@ -7,7 +7,7 @@
     An Awesome Web Ecommerce Platform for Online Shoppers to Browe, Search, and Purchase Products!
     <br/>
     <br/>
-    <a href=""><strong>Explore the live application »</strong></a>
+    <a href="https://www.todayecommerce.site/"><strong>Explore the live application »</strong></a>
     <br/>
     <br/>
   </p>
