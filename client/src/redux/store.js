@@ -15,7 +15,10 @@ import userReducer from './userRedux'
 
 const persistConfig = {
     key: "root",
+    version: 1,
     storage,
+    // blacklist: ['cart'], // What you don't wanna to persist
+    // whitelist: ['user'] // What you want to persist
 };
 
 const rootReducer = combineReducers({ user: userReducer, cart: cartReducer });

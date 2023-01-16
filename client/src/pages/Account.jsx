@@ -203,12 +203,12 @@ const Account = () => {
                                     <DetailTitle>Update Password</DetailTitle>
                                     <InfoLine>
                                         <Attribute >Orginal Password</Attribute>
-                                        <UserInfo type="password" onChange={e => setOriginalPassword(e.target.value)} required />
+                                        <UserInfo type="password" autocomplete="on" onChange={e => setOriginalPassword(e.target.value)} required />
                                         {/* <Change>change</Change> */}
                                     </InfoLine>
                                     <InfoLine>
                                         <Attribute >New Password</Attribute>
-                                        <UserInfo type="password" onChange={e => setNewPassword(e.target.value)} required />
+                                        <UserInfo type="password" autocomplete="on" onChange={e => setNewPassword(e.target.value)} required />
                                         {/* <Change>change</Change> */}
                                     </InfoLine>
                                     <Button onClick={handleUpdatePassword}>Submit</Button>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useToasts } from 'react-toast-notifications'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { tablet, mobile } from '../responsive';
 import { BASE_URL } from '../requestMethods';
 
@@ -65,6 +65,13 @@ const Button = styled.button`
     margin: auto; // button
 `
 
+const Text = styled.div`
+    margin: 5px 0px;
+    font-size: 12px;
+    text-decoration: underline;
+    cursor: pointer;
+`;
+
 const Register = () => {
     const navigate = useNavigate();
     const { addToast } = useToasts();
@@ -124,13 +131,19 @@ const Register = () => {
                     <Input placeholder="Nickname" type="text" onChange={e => setNewUser({ ...newUser, nickname: e.target.value })} required />
                     <Input placeholder="Email" type="email" onChange={e => setNewUser({ ...newUser, email: e.target.value })} required />
                     <Input placeholder="Username" onChange={e => setNewUser({ ...newUser, username: e.target.value })} required />
-                    <Input placeholder="Password" type="password" onChange={e => setNewUser({ ...newUser, password: e.target.value })} required />
+                    <Input placeholder="Password" type="password" autocomplete="on" onChange={e => setNewUser({ ...newUser, password: e.target.value })} required />
                     <Agreement>
                         By creating an account, I consent to the processing of my personal data in accordance with the <b>PRIVACY POLICY</b>
                     </Agreement>
                     {/* <Input type="submit" value="Send Request" /> */}
                     <Button type="submit" >CREATE</Button>
                 </Form>
+                <Link to="/login">
+                    <Text>ALREADY HAS AN ACCOUNT</Text>
+                </Link>
+                <Link to="/">
+                    <Text>BROWER FIRST</Text>
+                </Link>
             </Wrapper>
         </Container >
     )

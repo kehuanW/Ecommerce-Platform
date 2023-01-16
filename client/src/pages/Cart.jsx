@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Navbar from '../components/Navbar';
-import Announcement from '../components/Announcement';
-import Footer from '../components/Footer';
 import { Add, Remove } from '@material-ui/icons';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { tablet, mobile } from '../responsive';
 import { useDispatch, useSelector } from 'react-redux';
-import { userRequestNew } from '../requestMethods';
 import { useToasts } from 'react-toast-notifications';
 import { useNavigate, Link } from 'react-router-dom';
 import { increaseAmount, decreaseAmount, removeProduct, calCartTotal } from '../redux/cartRedux';
 import { updateCart } from '../redux/apiCalls';
+import Navbar from '../components/Navbar';
+import Announcement from '../components/Announcement';
+import Footer from '../components/Footer';
+import { userRequestNew } from '../requestMethods';
+import { tablet, mobile } from '../responsive';
 
 const Container = styled.div``
 

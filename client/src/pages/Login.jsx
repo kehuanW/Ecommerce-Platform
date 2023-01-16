@@ -103,24 +103,25 @@ const Login = () => {
                 <Title>SIGN IN</Title>
                 <Form>
                     <Input
-                        placeholder="username"
+                        placeholder="Username"
                         onChange={e => setUsername(e.target.value)} />
                     <Input
                         type="password"
-                        placeholder="password"
+                        placeholder="Password"
+                        autocomplete="on"
                         onChange={e => setPassword(e.target.value)} />
                     <Button onClick={handleLogin} disabled={isFetching}>
                         LOGIN
                     </Button>
                     {error && <Error>Something went wrong...</Error>}
                     {/* <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link> */}
-                    <Link to="/register">
-                        <Text>CREATE A NEW ACCOUNT</Text>
-                    </Link>
-                    <Link to="/">
-                        <Text>BROWER FIRST</Text>
-                    </Link>
                 </Form>
+                <Link to="/register">
+                    <Text>CREATE A NEW ACCOUNT</Text>
+                </Link>
+                <Link to="/">
+                    <Text>BROWER FIRST</Text>
+                </Link>
             </Wrapper>
         </Container>
     )

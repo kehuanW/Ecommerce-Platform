@@ -34,6 +34,7 @@ export const getUserCart = async (dispatch, currentUser) => {
 
     } catch (err) {
         console.log("Cart Loading Failure", err);
+        // throw "Cart Loading Failure. Please try again";
     }
 }
 
