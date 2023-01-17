@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { loginFailure, loginSuccess, loginStart } from './userRedux';
 import { publicRequest, userRequestNew } from '../requestMethods';
 import { calCartTotal, fetchCart } from './cartRedux';

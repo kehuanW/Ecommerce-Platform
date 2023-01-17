@@ -78,7 +78,7 @@ const Products = (props) => {
 
     return (
         <Container>
-            {console.log("FINAL RETURN")}
+            {/* {console.log("FINAL RETURN")} */}
             {(sort || (filters && Object.keys(filters) !== 0))
                 ? filteredProducts.map((item) => <Product item={item} key={item._id} />)
                 : products

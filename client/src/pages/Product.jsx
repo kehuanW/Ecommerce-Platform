@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Add, Remove } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
-
+import axios from 'axios';
 
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Newsletter from '../components/Newsletter';
 import Footer from '../components/Footer';
 import { tablet, mobile } from '../responsive';
-import { publicRequest } from '../requestMethods';
+import { BASE_URL, publicRequest } from '../requestMethods';
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { useToasts } from 'react-toast-notifications';
@@ -147,6 +147,7 @@ const Product = () => {
         const getProduct = async () => {
             try {
                 const res = await publicRequest.get(`products/find/${itemId}`);
+                // const res = await axios.get(`/${BASE_URL}products/find/${itemId}`);
                 setProduct(res.data);
             } catch (err) { }
         }

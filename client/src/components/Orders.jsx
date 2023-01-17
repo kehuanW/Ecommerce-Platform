@@ -60,7 +60,7 @@ const Orders = (props) => {
         <Container>
             <Title>My Orders</Title>
             {items.length !== 0
-                ? items.map((item) => <PurchasedItem item={item} />)
+                ? items.map((item, ind) => <PurchasedItem item={item} key={ind} />)
                 : <EmptyOrder>You haven't placed an order yet~</EmptyOrder>}
         </Container>
     )

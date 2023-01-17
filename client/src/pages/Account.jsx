@@ -149,7 +149,7 @@ const Account = () => {
             })
             .catch(res => {
                 // if (res) {
-                console.log("$%%%%%", res);
+                // console.log("$%%%%%", res);
                 if (res.response.status === 401) {
                     addToast("Your original password is wrong!", {
                         appearance: 'error',

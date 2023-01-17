@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require('path')
+// const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
@@ -33,6 +34,10 @@ app.use((req, res, next) => {
 
 app.use(cors());
 
+// app.use(createProxyMiddleware('/api/**', {
+//     target: 'http://localhost:5000/api',
+// }));
+
 app.use('/api/auth', authRoute);
 app.use('/api/users', userRoute);
 app.use('/api/products', productRoute);
@@ -49,18 +54,18 @@ app.use(express.static(buildPath))
 // console.log(_dirname)
 
 
-app.get("/*", function (req, res) {
+// app.get("/*", function (req, res) {
 
-    res.sendFile(
-        path.join(__dirname, "../client/build/index.html"),
-        function (err) {
-            if (err) {
-                res.status(500).send(err);
-            }
-        }
-    );
+//     res.sendFile(
+//         path.join(__dirname, "../client/build/index.html"),
+//         function (err) {
+//             if (err) {
+//                 res.status(500).send(err);
+//             }
+//         }
+//     );
 
-})
+// })
 
 app.listen(process.env.PORT || 5000, () => {
     console.log("Backend is running!")
