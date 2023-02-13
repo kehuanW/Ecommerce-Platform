@@ -44,7 +44,7 @@ React + Express + Node.js + MongoDB
 
 ### Installation
 #### Clone or download this repository  
-`git clone https://github.com/kehuanW/AussieCamp.git`
+`git clone https://github.com/kehuanW/Today-Ecommerce-Platform.git`
 
 #### Install dependencies
 Enter /client and /api respectively to install dependency packages through npm.  
