@@ -56,18 +56,19 @@ router.post('/payment',
 
 // CREATE ORDER in DB
 const creatOrder = async (purchaseCustomer, purchaseItems, purchaseAddress) => {
+    // console.log("$$$ in createOrder function")
     let order = { ...purchaseCustomer };
     order.products = purchaseItems;
     order.address = purchaseAddress;
     order.quantity = purchaseItems.length;
-    // console.log("creatOrder", order);
+    // console.log("$$$ creatOrder", order);
 
     const newOrder = new Order(order);
     try {
         const savedOrder = await newOrder.save();
-        // console.log("Processed Order:", savedOrder);
+        console.log("$$ Processed Order:", savedOrder);
     } catch (err) {
-        console.log("creatOrder error", err);
+        console.log("$$ creatOrder error", err);
     }
 }
 
@@ -90,11 +91,13 @@ router.post('/webhook',
         }
         // Handle the event
         if (event.type === "checkout.session.completed") {
-
-
+	    console.log("$$$$$$checkout.session.completed");
+	    //console.log("$$$$$payment_intent.succeeded");
+	
             const customer = await stripe.customers.retrieve(event.data.object.customer);
             const purchaseCustomer = customer.metadata;
-            // console.log("purchaseCustomer", purchaseCustomer);
+            
+	    // console.log("purchaseCustomer", purchaseCustomer);
             // purchaseCustomer { userId: '639011c32650e0a84c8bb231' }
 
             //When creating the items on the fly, metadata ends up in the product property, and not in the price property.
@@ -129,6 +132,7 @@ router.post('/webhook',
             // console.log("((((", session)
 
             try {
+		// console.log("$$$$try create order");
                 creatOrder(purchaseCustomer, purchaseItems, purchaseAddress);
             } catch (error) {
                 console.log(typeof createOrder);
